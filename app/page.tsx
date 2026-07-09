@@ -51,7 +51,7 @@ export default function Home() {
         <div className="hidden md:flex flex-1 min-h-0 w-full">
           <PanelGroup direction="horizontal" className="flex-1">
             {/* Main Area: Editor + Preview split (always 50-50 relative to each other) */}
-            <Panel minSize={60}>
+            <Panel defaultSize={80} minSize={60}>
               <PanelGroup direction="horizontal" className="flex-1">
                 {/* Left Panel: Markdown Editor */}
                 <Panel defaultSize={50} minSize={25}>
@@ -86,7 +86,7 @@ export default function Home() {
                 }
               }}
             >
-              <SettingsPanel />
+              {isSidebarOpen && <SettingsPanel />}
             </Panel>
           </PanelGroup>
         </div>
