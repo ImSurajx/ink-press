@@ -111,21 +111,9 @@ export async function POST(req: NextRequest) {
             ${markdownCSS}
             ${themeCSS}
             ${customCSS || ""}
-            
-            /* Print CSS Overrides */
-            @media print {
-              .markdown-body {
-                box-shadow: none !important;
-                border: none !important;
-                background-color: var(--theme-background) !important;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-                min-height: 100vh;
-              }
-            }
           </style>
         </head>
-        <body>
+        <body class="markdown-body theme-${theme || "github"}">
           <div class="markdown-body theme-${theme || "github"}">
             ${html}
           </div>
