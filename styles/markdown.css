@@ -16,7 +16,7 @@
   word-wrap: break-word;
   color: var(--theme-foreground);
   background-color: var(--theme-background);
-  padding: 40px 40px 40px 80px; /* Notebook binding margins padding */
+  padding: 40px 40px 40px 80px !important; /* Force notebook margins globally */
   margin: 0;
   position: relative;
 
