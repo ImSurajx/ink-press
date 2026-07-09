@@ -136,11 +136,15 @@ export default function Header() {
       const downloadName = fileName.endsWith(".md") 
         ? fileName.replace(".md", ".pdf") 
         : `${fileName}.pdf`;
-      link.setAttribute("download", downloadName);
+      link.download = downloadName;
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      
+      // Delay cleanup to allow browser download manager to resolve blob payload
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 1000);
 
     } catch (error: any) {
       console.error("PDF Export Error:", error);
