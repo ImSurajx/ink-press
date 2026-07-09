@@ -25,8 +25,10 @@ async function getBrowser() {
       return browser;
     }
   } else {
-    // Production (Vercel Serverless environment using lazy-loaded sparticuz-chromium)
-    const executablePath = await chromium.executablePath();
+    // Production (Vercel Serverless environment using lazy-loaded sparticuz-chromium from CDN)
+    const executablePath = await chromium.executablePath(
+      "https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.x64.tar"
+    );
     const browser = await playwright.chromium.launch({
       executablePath,
       args: chromium.args,
