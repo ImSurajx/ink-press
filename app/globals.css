@@ -128,3 +128,22 @@
     @apply font-sans;
   }
 }
+
+/* CodeMirror 6 scrolling fixes */
+.codemirror-editor {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.codemirror-editor .cm-editor {
+  height: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.codemirror-editor .cm-scroller {
+  overflow: auto !important;
+  flex: 1 !important;
+}
