@@ -4,20 +4,31 @@ import React from "react";
 import { useEditorStore } from "@/lib/store/editor";
 import { useThemeStore } from "@/lib/store/theme";
 import { useSettingsStore } from "@/lib/store/settings";
-import { Info, Sparkles } from "lucide-react";
+import { useUIStore } from "@/lib/store/ui";
+import { Info, Sparkles, Loader2 } from "lucide-react";
 
 export default function StatusBar() {
   const { wordCount, charCount } = useEditorStore();
   const { currentTheme } = useThemeStore();
-  const { pageSize, orientation } = useSettingsStore();
+  const { pageSize } = useSettingsStore();
+  const { isExporting } = useUIStore();
 
   return (
     <footer className="flex h-6 w-full items-center justify-between border-t border-border bg-background px-3 text-[11px] font-medium text-muted-foreground select-none">
       {/* Left: General Stats */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-1.5">
-          <Sparkles className="h-3 w-3 text-primary animate-pulse" />
-          <span>ink-press engine active</span>
+          {isExporting ? (
+            <>
+              <Loader2 className="h-3 w-3 text-primary animate-spin" />
+              <span className="text-primary font-semibold">Generating PDF...</span>
+            </>
+          ) : (
+            <>
+              <Sparkles className="h-3 w-3 text-primary animate-pulse" />
+              <span>ink-press engine active</span>
+            </>
+          )}
         </div>
         <div className="hidden sm:flex items-center gap-3">
           <span>{wordCount} words</span>
@@ -37,7 +48,7 @@ export default function StatusBar() {
           <Info className="h-3 w-3" />
           <span>Layout:</span>
           <span className="text-foreground font-semibold">
-            {pageSize} ({orientation})
+            {pageSize} (Portrait)
           </span>
         </div>
       </div>

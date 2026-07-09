@@ -1,0 +1,142 @@
+import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
+import playwright from "playwright-core";
+import chromium from "@sparticuz/chromium-min";
+
+const isDev = process.env.NODE_ENV === "development";
+
+// Helper function to resolve headless browser based on environment
+async function getBrowser() {
+  if (isDev) {
+    try {
+      // Local development standard launch
+      const browser = await playwright.chromium.launch({
+        headless: true,
+      });
+      return browser;
+    } catch (e) {
+      // Fallback: search for local installation of Google Chrome on macOS
+      const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+      const browser = await playwright.chromium.launch({
+        executablePath: chromePath,
+        headless: true,
+      });
+      return browser;
+    }
+  } else {
+    // Production (Vercel Serverless environment using lazy-loaded sparticuz-chromium)
+    const executablePath = await chromium.executablePath();
+    const browser = await playwright.chromium.launch({
+      executablePath,
+      args: chromium.args,
+      headless: chromium.headless === "true" || chromium.headless === true,
+    });
+    return browser;
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { html, theme, customCSS, pageSize = "A4" } = await req.json();
+
+    if (!html) {
+      return NextResponse.json({ error: "No HTML content provided" }, { status: 400 });
+    }
+
+    // Read base and theme stylesheet rules from the filesystem
+    let themeCSS = "";
+    if (theme && theme !== "custom") {
+      const themePath = path.join(process.cwd(), "styles", `${theme}.css`);
+      if (fs.existsSync(themePath)) {
+        themeCSS = fs.readFileSync(themePath, "utf-8");
+      }
+    }
+
+    const markdownCSSPath = path.join(process.cwd(), "styles", "markdown.css");
+    const markdownCSS = fs.existsSync(markdownCSSPath)
+      ? fs.readFileSync(markdownCSSPath, "utf-8")
+      : "";
+
+    // Construct the printable HTML page
+    const fullHtml = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+          <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              background-color: transparent;
+            }
+            ${markdownCSS}
+            ${themeCSS}
+            ${customCSS || ""}
+            
+            /* Print CSS Overrides */
+            @media print {
+              .markdown-body {
+                box-shadow: none !important;
+                border: none !important;
+                background-color: var(--theme-background) !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+                min-height: 100vh;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="markdown-body theme-${theme || "github"}">
+            ${html}
+          </div>
+        </body>
+      </html>
+    `;
+
+    // Launch Playwright
+    const browser = await getBrowser();
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    // Load full HTML and wait until fonts/images resolve
+    await page.setContent(fullHtml, { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts.ready);
+
+    // Generate the PDF
+    const pdfBuffer = await page.pdf({
+      format: pageSize as any,
+      printBackground: true,
+      margin: {
+        top: "0px",
+        bottom: "0px",
+        left: "0px",
+        right: "0px",
+      },
+    });
+
+    await browser.close();
+
+    // Return the response as a downloadable attachment
+    return new NextResponse(pdfBuffer, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": 'attachment; filename="ink-press-document.pdf"',
+        "Content-Length": pdfBuffer.length.toString(),
+      },
+    });
+
+  } catch (error: any) {
+    console.error("PDF Export API error:", error);
+    return NextResponse.json(
+      { error: `PDF generation failed: ${error.message || error}` },
+      { status: 500 }
+    );
+  }
+}

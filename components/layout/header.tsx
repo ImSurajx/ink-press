@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { useEditorStore } from "@/lib/store/editor";
 import { useThemeStore, ThemeType } from "@/lib/store/theme";
 import { useUIStore } from "@/lib/store/ui";
+import { useSettingsStore } from "@/lib/store/settings";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -30,8 +31,9 @@ import { cn } from "@/lib/utils";
 
 export default function Header() {
   const { fileName, setFileName, markdown, setMarkdown, clearMarkdown } = useEditorStore();
-  const { currentTheme, setCurrentTheme, resetTheme } = useThemeStore();
-  const { isSidebarOpen, setSidebarOpen, isExporting, activeTab, setActiveTab, setCustomCSSOpen } = useUIStore();
+  const { currentTheme, setCurrentTheme, resetTheme, customCSS } = useThemeStore();
+  const { isSidebarOpen, setSidebarOpen, isExporting, setExporting, activeTab, setActiveTab, setCustomCSSOpen } = useUIStore();
+  const { pageSize } = useSettingsStore();
   const { theme, setTheme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -96,9 +98,56 @@ export default function Header() {
     reader.readAsText(file);
   };
 
-  const triggerPDFExport = () => {
-    const event = new CustomEvent("trigger-pdf-export");
-    window.dispatchEvent(event);
+  const triggerPDFExport = async () => {
+    const previewContainer = document.getElementById("ink-preview-container");
+    if (!previewContainer) {
+      alert("Error: Preview container not found.");
+      return;
+    }
+
+    setExporting(true);
+
+    try {
+      const response = await fetch("/api/export", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          html: previewContainer.innerHTML,
+          theme: currentTheme,
+          customCSS,
+          pageSize,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate PDF");
+      }
+
+      // Convert response to blob
+      const blob = await response.blob();
+      
+      // Download the PDF
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      const downloadName = fileName.endsWith(".md") 
+        ? fileName.replace(".md", ".pdf") 
+        : `${fileName}.pdf`;
+      link.setAttribute("download", downloadName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+    } catch (error: any) {
+      console.error("PDF Export Error:", error);
+      alert(`Export failed: ${error.message || error}`);
+    } finally {
+      setExporting(false);
+    }
   };
 
   const themes: { value: ThemeType; label: string }[] = [
