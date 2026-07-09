@@ -143,9 +143,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    await browser.close();
+    // Close Playwright browser in the background to prevent waiting delays
+    browser.close().catch((err) => console.error("Error closing browser:", err));
 
-    // Return the raw binary response as a downloadable attachment
+    // Return the raw binary response as a downloadable attachment with dynamic name
     return new Response(pdfBuffer, {
       status: 200,
       headers: {
