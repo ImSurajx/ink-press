@@ -269,6 +269,45 @@
 .markdown-body .admonition.success { border-left-color: #38a169; background-color: rgba(56, 161, 105, 0.05); }
 .markdown-body .admonition.success .admonition-title { color: #2f855a; }
 
+/* Auto page break gap styled as a physical page gap in screen preview */
+.markdown-body > .auto-page-break {
+  margin-top: 80px !important; /* Spacing gap */
+  position: relative !important;
+}
+
+/* Page break indicator line and label in preview */
+.markdown-body > .auto-page-break::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -40px !important;
+  left: -80px !important; /* Stretch across left padding */
+  right: -40px !important;
+  height: 2px !important;
+  background-color: var(--theme-border) !important;
+  border-bottom: 2px dashed var(--theme-border) !important;
+  opacity: 0.4 !important;
+  display: block !important;
+}
+
+.markdown-body > .auto-page-break::after {
+  content: "PAGE BREAK" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: -40px !important;
+  transform: translate(-50%, -50%) !important;
+  background-color: var(--theme-background) !important;
+  color: var(--theme-muted) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  padding: 4px 12px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--theme-border) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+  z-index: 10 !important;
+  display: block !important;
+}
+
 /* Print Media Stylesheet Overrides */
 @media print {
   @page {
@@ -305,6 +344,18 @@
   .markdown-body > * {
     margin-top: 14px !important;
     margin-bottom: 14px !important;
+  }
+
+  /* Style auto page break elements to trigger physical page breaks in PDF */
+  .markdown-body > .auto-page-break {
+    margin-top: 0 !important;
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  .markdown-body > .auto-page-break::before,
+  .markdown-body > .auto-page-break::after {
+    display: none !important;
   }
 
   /* Prevent elements from cutting in half across PDF page boundaries */

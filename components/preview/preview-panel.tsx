@@ -93,6 +93,54 @@ export default function PreviewPanel() {
     renderMermaid();
   }, [renderedHtml, resolvedTheme]);
 
+  // Dynamic automatic page break annotation based on page size and content heights
+  useEffect(() => {
+    if (!renderedHtml) return;
+
+    const runPagination = () => {
+      const container = document.getElementById("ink-preview-container");
+      if (!container) return;
+
+      const children = Array.from(container.children);
+      if (children.length === 0) return;
+
+      const getPageHeightPx = () => {
+        switch (pageSize) {
+          case "Letter": return 1056;
+          case "Legal": return 1344;
+          case "A3": return 1587;
+          case "A5": return 794;
+          case "A4":
+          default: return 1123;
+        }
+      };
+
+      const targetPageHeight = getPageHeightPx() - 120; // 120px padding margins buffer
+      let currentHeight = 0;
+
+      children.forEach((child: any) => {
+        if (child.tagName === "STYLE" || child.style.display === "none") return;
+
+        const h = child.offsetHeight;
+        const styles = window.getComputedStyle(child);
+        const marginTop = parseFloat(styles.marginTop) || 0;
+        const marginBottom = parseFloat(styles.marginBottom) || 0;
+        const totalHeight = h + marginTop + marginBottom;
+
+        if (currentHeight + totalHeight > targetPageHeight) {
+          child.classList.add("auto-page-break");
+          currentHeight = totalHeight;
+        } else {
+          child.classList.remove("auto-page-break");
+          currentHeight += totalHeight;
+        }
+      });
+    };
+
+    const timer = setTimeout(runPagination, 250);
+    return () => clearTimeout(timer);
+  }, [renderedHtml, pageSize]);
+
   return (
     <div className="flex flex-col flex-1 h-full w-full bg-background overflow-hidden relative">
       {/* Title bar */}
