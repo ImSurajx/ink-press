@@ -3,6 +3,8 @@
 @import "shadcn/tailwind.css";
 
 /* Markdown Theme Imports */
+@import "katex/dist/katex.min.css";
+@import "highlight.js/styles/github.css";
 @import "../styles/markdown.css";
 @import "../styles/github.css";
 @import "../styles/minimal.css";
