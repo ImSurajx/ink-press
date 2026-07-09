@@ -1,0 +1,71 @@
+/* Academic CSS Theme (LaTeX / Journal Style) */
+
+.markdown-body.theme-academic {
+  --theme-background: #ffffff;
+  --theme-foreground: #111111;
+  --theme-heading: #000000;
+  --theme-border: #333333;
+  --theme-muted: #555555;
+  --theme-link: #0000ee;
+  --theme-quote-border: #777777;
+  --theme-quote-bg: #f9f9f9;
+  --theme-table-header-bg: #eaeaea;
+  --theme-table-zebra-bg: #ffffff;
+  --theme-code-bg: #f3f3f3;
+  --theme-code-color: #000000;
+  --theme-code-block-bg: #fbfbfb;
+  --theme-mermaid-bg: #ffffff;
+  
+  --ink-font-sans: "Times New Roman", Times, "Cambria", Georgia, serif;
+  --ink-font-mono: "Courier New", Courier, monospace;
+  --ink-line-height: 1.5;
+}
+
+.markdown-body.theme-academic {
+  padding: 50px 70px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* Adjust academic headings to be centered/serif */
+.markdown-body.theme-academic h1,
+.markdown-body.theme-academic h2,
+.markdown-body.theme-academic h3,
+.markdown-body.theme-academic h4 {
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-top: 30px;
+}
+
+.markdown-body.theme-academic h1 {
+  font-size: 1.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.markdown-body.theme-academic h2 {
+  font-size: 1.4em;
+}
+
+.markdown-body.theme-academic h3 {
+  font-size: 1.2em;
+  text-align: left;
+}
+
+/* Add indent to consecutive paragraphs */
+.markdown-body.theme-academic p + p {
+  text-indent: 2em;
+  margin-top: -12px;
+}
+
+/* Horizontal lines */
+.markdown-body.theme-academic hr {
+  height: 1px;
+  background-color: #333333;
+  margin: 30px 0;
+}

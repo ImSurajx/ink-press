@@ -1,0 +1,62 @@
+/* Print Specific CSS Rules */
+
+@media print {
+  /* Reset margins for printing - handled by Playwright print options, but good to reset browser defaults */
+  body {
+    background: transparent;
+    color: #000000;
+  }
+  
+  .markdown-body {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    font-size: 12pt; /* Readable print sizing */
+    background-color: transparent !important;
+  }
+  
+  /* Prevent background color stripping in print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Page break control */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  
+  img, table, pre, blockquote, .mermaid, .katex-display {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  /* Links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    color: #555555;
+  }
+  
+  /* Suppress links with internal hashes or javascript */
+  a[href^="#"]:after, a[href^="javascript:"]:after {
+    content: "";
+  }
+}
+
+/* Page Break Utility Classes */
+.page-break-before {
+  page-break-before: always;
+  break-before: always;
+}
+
+.page-break-after {
+  page-break-after: always;
+  break-after: always;
+}
+
+.page-break-avoid {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

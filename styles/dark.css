@@ -1,0 +1,44 @@
+/* Dark Mode CSS Theme */
+
+.markdown-body.theme-dark {
+  --theme-background: #0f172a;  /* Slate 900 */
+  --theme-foreground: #cbd5e1;  /* Slate 300 */
+  --theme-heading: #f8fafc;     /* Slate 50 */
+  --theme-border: #334155;      /* Slate 800 */
+  --theme-muted: #94a3b8;       /* Slate 400 */
+  --theme-link: #38bdf8;        /* Sky 400 */
+  --theme-quote-border: #38bdf8;
+  --theme-quote-bg: #1e293b;    /* Slate 800 */
+  --theme-table-header-bg: #1e293b;
+  --theme-table-zebra-bg: #1e293b;
+  --theme-code-bg: #1e293b;
+  --theme-code-color: #cbd5e1;
+  --theme-code-block-bg: #0b0f19;
+  --theme-mermaid-bg: #0f172a;
+}
+
+.markdown-body.theme-dark {
+  padding: 40px 48px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Adjust dark theme border variables */
+.markdown-body.theme-dark table th,
+.markdown-body.theme-dark table td {
+  border-color: var(--theme-border);
+}
+
+.markdown-body.theme-dark blockquote {
+  border-left-color: var(--theme-quote-border);
+  background-color: var(--theme-quote-bg);
+}
+
+.markdown-body.theme-dark img {
+  border-color: var(--theme-border);
+  background-color: #1e293b;
+}
+
+.markdown-body.theme-dark hr {
+  background-color: var(--theme-border);
+}

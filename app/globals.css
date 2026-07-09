@@ -2,6 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Markdown Theme Imports */
+@import "../styles/markdown.css";
+@import "../styles/github.css";
+@import "../styles/minimal.css";
+@import "../styles/academic.css";
+@import "../styles/modern.css";
+@import "../styles/dark.css";
+@import "../styles/print.css";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
