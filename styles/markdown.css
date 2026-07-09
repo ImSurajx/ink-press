@@ -269,8 +269,11 @@
     -webkit-print-color-adjust: exact;
   }
 
-  .markdown-body {
+  .markdown-body,
+  .markdown-body[class*="theme-"] {
     background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
     box-shadow: none !important;
     border: none !important;
     padding: 0px 40px 0px 80px !important; /* Reset vertical paddings since page margins handle them */
