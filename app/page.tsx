@@ -8,15 +8,70 @@ import PreviewPanel from "@/components/preview/preview-panel";
 import SettingsPanel from "@/components/settings/settings-panel";
 import CustomCSSDialog from "@/components/themes/custom-css-dialog";
 import { useUIStore } from "@/lib/store/ui";
+import { useEditorStore } from "@/lib/store/editor";
+import { useSettingsStore } from "@/lib/store/settings";
+import { useThemeStore } from "@/lib/store/theme";
 import { Panel, Group as PanelGroup, Separator as PanelResizeHandle, ImperativePanelHandle } from "react-resizable-panels";
 
 export default function Home() {
   const { activeTab } = useUIStore();
+  const { markdown, setMarkdown, fileName, setFileName } = useEditorStore();
+  const { pageSize, setPageSize, orientation, setOrientation } = useSettingsStore();
+  const { currentTheme, setCurrentTheme, customCSS, setCustomCSS } = useThemeStore();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    // Restore states from localStorage if available
+    try {
+      const savedMarkdown = localStorage.getItem("ink-press-markdown");
+      const savedFileName = localStorage.getItem("ink-press-filename");
+      const savedPageSize = localStorage.getItem("ink-press-pagesize");
+      const savedOrientation = localStorage.getItem("ink-press-orientation");
+      const savedTheme = localStorage.getItem("ink-press-theme");
+      const savedCustomCSS = localStorage.getItem("ink-press-customcss");
+
+      if (savedMarkdown !== null) setMarkdown(savedMarkdown);
+      if (savedFileName !== null) setFileName(savedFileName);
+      if (savedPageSize !== null) setPageSize(savedPageSize as any);
+      if (savedOrientation !== null) setOrientation(savedOrientation as any);
+      if (savedTheme !== null) setCurrentTheme(savedTheme as any);
+      if (savedCustomCSS !== null) setCustomCSS(savedCustomCSS);
+    } catch (e) {
+      console.error("Failed to restore state from localStorage:", e);
+    }
   }, []);
+
+  // Save changes to localStorage dynamically
+  useEffect(() => {
+    if (!isMounted) return;
+    localStorage.setItem("ink-press-markdown", markdown);
+  }, [markdown, isMounted]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    localStorage.setItem("ink-press-filename", fileName);
+  }, [fileName, isMounted]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    localStorage.setItem("ink-press-pagesize", pageSize);
+  }, [pageSize, isMounted]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    localStorage.setItem("ink-press-orientation", orientation);
+  }, [orientation, isMounted]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    localStorage.setItem("ink-press-theme", currentTheme);
+  }, [currentTheme, isMounted]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    localStorage.setItem("ink-press-customcss", customCSS);
+  }, [customCSS, isMounted]);
 
   if (!isMounted) {
     return (
