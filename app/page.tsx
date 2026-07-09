@@ -6,6 +6,7 @@ import StatusBar from "@/components/layout/status-bar";
 import EditorPanel from "@/components/editor/editor-panel";
 import PreviewPanel from "@/components/preview/preview-panel";
 import SettingsPanel from "@/components/settings/settings-panel";
+import CustomCSSDialog from "@/components/themes/custom-css-dialog";
 import { useUIStore } from "@/lib/store/ui";
 import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from "react-resizable-panels";
 
@@ -74,6 +75,9 @@ export default function Home() {
 
       {/* Footer Status Bar */}
       <StatusBar />
+
+      {/* Theme Custom CSS Editor Modal */}
+      <CustomCSSDialog />
     </div>
   );
 }

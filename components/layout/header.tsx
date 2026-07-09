@@ -31,7 +31,7 @@ import { cn } from "@/lib/utils";
 export default function Header() {
   const { fileName, setFileName, markdown, setMarkdown, clearMarkdown } = useEditorStore();
   const { currentTheme, setCurrentTheme, resetTheme } = useThemeStore();
-  const { isSidebarOpen, setSidebarOpen, isExporting, activeTab, setActiveTab } = useUIStore();
+  const { isSidebarOpen, setSidebarOpen, isExporting, activeTab, setActiveTab, setCustomCSSOpen } = useUIStore();
   const { theme, setTheme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -156,12 +156,24 @@ export default function Header() {
               {themes.map((t) => (
                 <DropdownMenuItem
                   key={t.value}
-                  onClick={() => setCurrentTheme(t.value)}
+                  onClick={() => {
+                    setCurrentTheme(t.value);
+                    if (t.value === "custom") {
+                      setCustomCSSOpen(true);
+                    }
+                  }}
                   className={`text-xs ${currentTheme === t.value ? "font-bold bg-muted" : ""}`}
                 >
                   {t.label}
                 </DropdownMenuItem>
               ))}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => setCustomCSSOpen(true)}
+                className="text-xs text-primary font-semibold"
+              >
+                Configure Custom CSS...
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
