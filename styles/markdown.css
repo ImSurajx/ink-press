@@ -316,7 +316,7 @@
     background-image: none !important;
     box-shadow: none !important;
     border: none !important;
-    padding: 40px 40px 40px 80px !important; /* Restore vertical margins at document edges */
+    padding: 0px 40px 0px 80px !important; /* Remove container margins since @page margins handle them */
     min-height: auto !important;
   }
 
