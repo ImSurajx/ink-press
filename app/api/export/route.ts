@@ -117,6 +117,9 @@ export async function POST(req: NextRequest) {
             ${customCSS || ""}
 
             @media print {
+              @page {
+                background-color: ${themeBg} !important;
+              }
               html, body {
                 background-color: ${themeBg} !important;
               }
