@@ -15,6 +15,7 @@
   --theme-code-color: #00ffff;
   --theme-code-block-bg: #020b02;
   --theme-mermaid-bg: #000000;
+  --ruled-line-color: rgba(0, 255, 0, 0.05);
 
   --ink-font-sans: "JetBrains Mono", "Fira Code", monospace;
   --ink-font-mono: "JetBrains Mono", "Fira Code", monospace;

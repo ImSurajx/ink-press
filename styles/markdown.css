@@ -12,12 +12,17 @@
 .markdown-body {
   font-family: var(--ink-font-sans);
   font-size: 16px;
-  line-height: var(--ink-line-height);
+  line-height: var(--ruled-line-height, 28px) !important;
   word-wrap: break-word;
   color: var(--theme-foreground);
   background-color: var(--theme-background);
-  padding: 0;
+  padding: 40px;
   margin: 0;
+
+  /* Ruled Notebook Background (Linear Gradients) */
+  background-image: linear-gradient(var(--ruled-line-color, rgba(0, 0, 0, 0.04)) 1px, transparent 1px);
+  background-size: 100% var(--ruled-line-height, 28px);
+  box-sizing: border-box;
 }
 
 /* Headings */
