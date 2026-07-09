@@ -249,3 +249,54 @@
 
 .markdown-body .admonition.success { border-left-color: #38a169; background-color: rgba(56, 161, 105, 0.05); }
 .markdown-body .admonition.success .admonition-title { color: #2f855a; }
+
+/* Print Media Stylesheet Overrides */
+@media print {
+  @page {
+    margin-top: 15mm !important;
+    margin-bottom: 15mm !important;
+    margin-left: 0mm !important;
+    margin-right: 0mm !important;
+  }
+  
+  .markdown-body {
+    box-shadow: none !important;
+    border: none !important;
+    background-color: var(--theme-background) !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    min-height: 100vh;
+  }
+
+  /* Prevent elements from cutting in half across PDF page boundaries */
+  .markdown-body p,
+  .markdown-body li,
+  .markdown-body blockquote,
+  .markdown-body pre,
+  .markdown-body table,
+  .markdown-body tr,
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6,
+  .markdown-body .mermaid,
+  .markdown-body .katex-display,
+  .markdown-body .admonition {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Prevent heading orphan rows at the bottom of pages */
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    break-after: avoid-page !important;
+    page-break-after: avoid !important;
+  }
+}
+
