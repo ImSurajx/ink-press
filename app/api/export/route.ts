@@ -1,24 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import playwright from "playwright-core";
+import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium-min";
 
 const isDev = process.env.NODE_ENV === "development";
 
-// Helper function to resolve headless browser based on environment
+// Helper function to resolve headless browser based on environment using puppeteer-core
 async function getBrowser() {
   if (isDev) {
     try {
       // Local development standard launch
-      const browser = await playwright.chromium.launch({
+      const browser = await puppeteer.launch({
         headless: true,
       });
       return browser;
     } catch (e) {
       // Fallback: search for local installation of Google Chrome on macOS
       const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-      const browser = await playwright.chromium.launch({
+      const browser = await puppeteer.launch({
         executablePath: chromePath,
         headless: true,
       });
@@ -29,10 +29,11 @@ async function getBrowser() {
     const executablePath = await chromium.executablePath(
       "https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.x64.tar"
     );
-    const browser = await playwright.chromium.launch({
+    const browser = await puppeteer.launch({
       executablePath,
       args: chromium.args,
       headless: (chromium as any).headless === "true" || (chromium as any).headless === true,
+      defaultViewport: (chromium as any).defaultViewport,
     });
     return browser;
   }
@@ -140,20 +141,17 @@ export async function POST(req: NextRequest) {
       </html>
     `;
 
-    // Launch Playwright with specific page size viewport to prevent scaling distortion
+    // Launch Puppeteer with specific page size viewport to prevent scaling distortion
     const { width, height } = getPageViewport(pageSize);
     const browser = await getBrowser();
-    const context = await browser.newContext({
-      viewport: { width, height },
-      deviceScaleFactor: 1,
-    });
-    const page = await context.newPage();
+    const page = await browser.newPage();
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
 
     // Load full HTML and wait until fonts/images resolve
-    await page.setContent(fullHtml, { waitUntil: "networkidle" });
+    await page.setContent(fullHtml, { waitUntil: "networkidle0" as any });
     await page.evaluate(() => document.fonts.ready);
 
-    // Generate the PDF
+    // Generate the PDF using Puppeteer
     const pdfBuffer = await page.pdf({
       format: pageSize as any,
       printBackground: true,
@@ -165,8 +163,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Close Playwright browser in the background to prevent waiting delays
-    browser.close().catch((err) => console.error("Error closing browser:", err));
+    // Close browser in the background to prevent waiting delays
+    await browser.close();
 
     // Return the raw binary response as a downloadable attachment with dynamic name
     return new Response(new Uint8Array(pdfBuffer), {
