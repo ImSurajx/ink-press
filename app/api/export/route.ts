@@ -36,6 +36,17 @@ async function getBrowser() {
   }
 }
 
+function getPageViewport(pageSize: string) {
+  const dimensions: Record<string, { width: number; height: number }> = {
+    A4: { width: 794, height: 1123 },      // Standard A4 at 96 DPI
+    Letter: { width: 816, height: 1056 },  // Standard Letter at 96 DPI
+    Legal: { width: 816, height: 1344 },   // Standard Legal at 96 DPI
+    A3: { width: 1123, height: 1587 },     // Standard A3 at 96 DPI
+    A5: { width: 559, height: 794 },       // Standard A5 at 96 DPI
+  };
+  return dimensions[pageSize] || dimensions.A4;
+}
+
 export async function POST(req: NextRequest) {
   try {
     let html = "";
@@ -122,9 +133,13 @@ export async function POST(req: NextRequest) {
       </html>
     `;
 
-    // Launch Playwright
+    // Launch Playwright with specific page size viewport to prevent scaling distortion
+    const { width, height } = getPageViewport(pageSize);
     const browser = await getBrowser();
-    const context = await browser.newContext();
+    const context = await browser.newContext({
+      viewport: { width, height },
+      deviceScaleFactor: 1,
+    });
     const page = await context.newPage();
 
     // Load full HTML and wait until fonts/images resolve

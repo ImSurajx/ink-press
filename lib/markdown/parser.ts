@@ -22,7 +22,8 @@ function rehypeMermaid() {
       if (codeNode && codeNode.type === "element" && codeNode.tagName === "code") {
         const className = codeNode.properties?.className || [];
         if (className.includes("language-mermaid")) {
-          // Transform <pre><code> to <pre class="mermaid">
+          // Transform <pre><code> to <div class="mermaid"> to bypass syntax highlight conflicts
+          node.tagName = "div";
           node.properties = { className: ["mermaid"] };
           node.children = codeNode.children;
           return;

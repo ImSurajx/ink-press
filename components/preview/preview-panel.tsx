@@ -11,7 +11,7 @@ import mermaid from "mermaid";
 export default function PreviewPanel() {
   const { markdown } = useEditorStore();
   const { currentTheme, customCSS } = useThemeStore();
-  const { marginType } = useSettingsStore();
+  const { marginType, pageSize } = useSettingsStore();
   const { resolvedTheme } = useTheme();
   const [renderedHtml, setRenderedHtml] = useState("");
 
@@ -24,6 +24,21 @@ export default function PreviewPanel() {
       case "normal":
       default:
         return "20mm";
+    }
+  };
+
+  const getPageWidth = () => {
+    switch (pageSize) {
+      case "Letter":
+      case "Legal":
+        return "816px";
+      case "A3":
+        return "1123px";
+      case "A5":
+        return "559px";
+      case "A4":
+      default:
+        return "794px";
     }
   };
 
@@ -92,9 +107,10 @@ export default function PreviewPanel() {
 
         <div
           id="ink-preview-container"
-          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm max-w-[800px] w-full`}
+          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm w-full transition-all duration-300`}
           style={{
             padding: getMarginPadding(),
+            maxWidth: getPageWidth(),
           }}
           dangerouslySetInnerHTML={{ __html: renderedHtml }}
         />
