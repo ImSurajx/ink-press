@@ -1,20 +1,27 @@
-/* GitHub CSS Theme */
+/* GitHub Code Notes Theme (Poppins & JetBrains Mono) */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 .markdown-body.theme-github {
   --theme-background: #ffffff;
-  --theme-foreground: #24292f;
-  --theme-heading: #1f2328;
-  --theme-border: #d0d7de;
-  --theme-muted: #57606a;
-  --theme-link: #0969da;
-  --theme-quote-border: #d0d7de;
-  --theme-quote-bg: #f6f8fa;
-  --theme-table-header-bg: #f6f8fa;
-  --theme-table-zebra-bg: #f6f8fa;
-  --theme-code-bg: rgba(175, 184, 193, 0.2);
-  --theme-code-color: #24292f;
-  --theme-code-block-bg: #f6f8fa;
+  --theme-foreground: #2d3748;      /* Slate Gray for readability */
+  --theme-heading: #1a202c;         /* Dark Charcoal for contrast */
+  --theme-border: #e2e8f0;          /* Soft border color */
+  --theme-muted: #718096;
+  --theme-link: #3182ce;            /* Scientific blue */
+  --theme-quote-border: #3182ce;    /* Callout border */
+  --theme-quote-bg: #f7fafc;        /* Soft background */
+  --theme-table-header-bg: #edf2f7;
+  --theme-table-zebra-bg: #f7fafc;
+  --theme-code-bg: #f7fafc;
+  --theme-code-color: #2d3748;
+  --theme-code-block-bg: #f7fafc;
   --theme-mermaid-bg: #ffffff;
+  
+  /* Font overrides for code notes */
+  --ink-font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ink-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --ink-line-height: 1.65;
 }
 
 /* Adjustments for GitHub layout spacing */
@@ -22,4 +29,50 @@
   padding: 40px;
   max-width: 850px;
   margin: 0 auto;
+}
+
+/* Custom styles for physics/math note readability */
+.markdown-body.theme-github h1,
+.markdown-body.theme-github h2,
+.markdown-body.theme-github h3 {
+  font-family: var(--ink-font-sans);
+  letter-spacing: -0.015em;
+  font-weight: 600;
+  color: var(--theme-heading);
+}
+
+.markdown-body.theme-github h1 {
+  border-bottom: 2px solid var(--theme-border);
+  padding-bottom: 0.4em;
+  margin-top: 32px;
+}
+
+.markdown-body.theme-github h2 {
+  border-bottom: 1px solid var(--theme-border);
+  padding-bottom: 0.3em;
+  margin-top: 28px;
+}
+
+.markdown-body.theme-github pre {
+  border: 1px solid var(--theme-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.markdown-body.theme-github code {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.markdown-body.theme-github table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+}
+
+.markdown-body.theme-github blockquote {
+  font-size: 0.95em;
+  padding: 8px 16px;
+  background-color: var(--theme-quote-bg);
+  border-left: 4px solid var(--theme-quote-border);
+  border-radius: 0 4px 4px 0;
 }
