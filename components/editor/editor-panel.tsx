@@ -110,6 +110,7 @@ export default function EditorPanel() {
             onClick={btn.action}
             className="h-7 w-7 text-muted-foreground hover:text-foreground"
             title={btn.title}
+            aria-label={btn.title}
           >
             <btn.icon className="h-4 w-4" />
           </Button>

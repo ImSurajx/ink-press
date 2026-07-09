@@ -73,6 +73,39 @@ export default function Home() {
     localStorage.setItem("ink-press-customcss", customCSS);
   }, [customCSS, isMounted]);
 
+  // Global accessibility keyboard controls (Ctrl+S / Cmd+S to save MD, Ctrl+P / Cmd+P to export PDF)
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isMeta = e.ctrlKey || e.metaKey;
+      if (!isMeta) return;
+
+      switch (e.key.toLowerCase()) {
+        case "s":
+          e.preventDefault();
+          // Trigger standard Markdown download trigger
+          const blob = new Blob([markdown], { type: "text/markdown;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", fileName);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          break;
+        case "p":
+          e.preventDefault();
+          // Dispatch custom event to trigger playwright generation
+          window.dispatchEvent(new CustomEvent("ink-trigger-pdf-export"));
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [markdown, fileName, isMounted]);
+
   if (!isMounted) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background text-muted-foreground font-mono text-sm">

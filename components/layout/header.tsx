@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useEditorStore } from "@/lib/store/editor";
 import { useThemeStore, ThemeType } from "@/lib/store/theme";
 import { useUIStore } from "@/lib/store/ui";
@@ -36,6 +36,12 @@ export default function Header() {
   const { pageSize } = useSettingsStore();
   const { theme, setTheme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleExportEvent = () => triggerPDFExport();
+    window.addEventListener("ink-trigger-pdf-export", handleExportEvent);
+    return () => window.removeEventListener("ink-trigger-pdf-export", handleExportEvent);
+  }, [markdown, currentTheme, customCSS, pageSize, fileName]);
 
   const handleFileNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(e.target.value);
@@ -184,7 +190,7 @@ export default function Header() {
         {/* Mobile menu trigger */}
         <div className="sm:hidden">
           <DropdownMenu>
-            <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")}>
+            <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-8 w-8")} aria-label="Toggle Navigation Menu">
               <Menu className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -198,7 +204,7 @@ export default function Header() {
         {/* Theme select */}
         <div className="hidden sm:block">
           <DropdownMenu>
-            <DropdownMenuTrigger className={cn(buttonVariants({ variant: "outline", size: "sm" }), "h-8 text-xs font-semibold gap-1.5")}>
+            <DropdownMenuTrigger className={cn(buttonVariants({ variant: "outline", size: "sm" }), "h-8 text-xs font-semibold gap-1.5")} aria-label="Select Document Theme">
               Theme: <span className="text-muted-foreground capitalize">{currentTheme}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
@@ -229,7 +235,7 @@ export default function Header() {
 
         {/* Export / Download Menu */}
         <DropdownMenu>
-          <DropdownMenuTrigger className={cn(buttonVariants({ variant: "outline", size: "sm" }), "h-8 text-xs font-semibold gap-1.5")}>
+          <DropdownMenuTrigger className={cn(buttonVariants({ variant: "outline", size: "sm" }), "h-8 text-xs font-semibold gap-1.5")} aria-label="Export Document Menu Options">
             <Download className="h-3.5 w-3.5" />
             <span>Export</span>
           </DropdownMenuTrigger>
@@ -257,6 +263,7 @@ export default function Header() {
           onClick={() => fileInputRef.current?.click()}
           className="h-8 w-8 text-muted-foreground hover:text-foreground"
           title="Import Markdown File"
+          aria-label="Import Markdown File"
         >
           <Upload className="h-4 w-4" />
           <input
@@ -280,6 +287,7 @@ export default function Header() {
           }}
           className="h-8 w-8 text-muted-foreground hover:text-destructive"
           title="Reset Everything"
+          aria-label="Reset Editor to Defaults"
         >
           <RefreshCw className="h-4 w-4" />
         </Button>
@@ -293,6 +301,7 @@ export default function Header() {
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="h-8 w-8 text-muted-foreground hover:text-foreground hidden sm:inline-flex"
           title="Toggle App Dark Mode"
+          aria-label="Toggle App Dark Mode"
         >
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -304,6 +313,7 @@ export default function Header() {
           onClick={() => setSidebarOpen(!isSidebarOpen)}
           className="h-8 w-8 text-muted-foreground hover:text-foreground hidden md:inline-flex"
           title="Toggle Settings Panel"
+          aria-label="Toggle Settings Sidebar"
         >
           <Settings className="h-4 w-4" />
         </Button>
