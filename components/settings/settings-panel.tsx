@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSettingsStore, PageSize, Orientation, MarginType } from "@/lib/store/settings";
 import { useUIStore } from "@/lib/store/ui";
 import { Label } from "@/components/ui/label";
@@ -18,23 +18,43 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 export default function SettingsPanel() {
   const { isSidebarOpen, setSidebarOpen } = useUIStore();
-  const {
-    pageSize,
-    setPageSize,
-    orientation,
-    setOrientation,
-    marginType,
-    setMarginType,
-    displayHeaderFooter,
-    setDisplayHeaderFooter,
-    printBackground,
-    setPrintBackground,
-  } = useSettingsStore();
+  const store = useSettingsStore();
+
+  // Local state to hold settings before applying
+  const [pageSize, setPageSize] = useState<PageSize>(store.pageSize);
+  const [orientation, setOrientation] = useState<Orientation>(store.orientation);
+  const [marginType, setMarginType] = useState<MarginType>(store.marginType);
+  const [displayHeaderFooter, setDisplayHeaderFooter] = useState<boolean>(store.displayHeaderFooter);
+  const [printBackground, setPrintBackground] = useState<boolean>(store.printBackground);
+
+  // Re-sync local states when the modal is opened
+  useEffect(() => {
+    if (isSidebarOpen) {
+      setPageSize(store.pageSize);
+      setOrientation(store.orientation);
+      setMarginType(store.marginType);
+      setDisplayHeaderFooter(store.displayHeaderFooter);
+      setPrintBackground(store.printBackground);
+    }
+  }, [isSidebarOpen, store]);
+
+  const handleApply = () => {
+    // Commit local state changes to global store
+    store.setPageSize(pageSize);
+    store.setOrientation(orientation);
+    store.setMarginType(marginType);
+    store.setDisplayHeaderFooter(displayHeaderFooter);
+    store.setPrintBackground(printBackground);
+
+    // Close the settings dialog modal
+    setSidebarOpen(false);
+  };
 
   const pageSizes: PageSize[] = ["A4", "Letter", "Legal", "A3", "A5"];
   const marginTypes: { value: MarginType; label: string }[] = [
@@ -129,6 +149,15 @@ export default function SettingsPanel() {
             </div>
           </div>
         </div>
+
+        <DialogFooter className="flex items-center justify-end gap-2 pt-4 border-t border-border">
+          <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(false)} className="text-xs">
+            Cancel
+          </Button>
+          <Button variant="default" size="sm" onClick={handleApply} className="text-xs">
+            Apply Settings
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

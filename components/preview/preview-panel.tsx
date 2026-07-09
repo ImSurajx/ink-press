@@ -4,14 +4,28 @@ import React, { useEffect, useState } from "react";
 import { useEditorStore } from "@/lib/store/editor";
 import { useThemeStore } from "@/lib/store/theme";
 import { parseMarkdown } from "@/lib/markdown/parser";
+import { useSettingsStore } from "@/lib/store/settings";
 import { useTheme } from "next-themes";
 import mermaid from "mermaid";
 
 export default function PreviewPanel() {
   const { markdown } = useEditorStore();
   const { currentTheme, customCSS } = useThemeStore();
+  const { marginType } = useSettingsStore();
   const { resolvedTheme } = useTheme();
   const [renderedHtml, setRenderedHtml] = useState("");
+
+  const getMarginPadding = () => {
+    switch (marginType) {
+      case "none":
+        return "0px";
+      case "minimum":
+        return "10mm";
+      case "normal":
+      default:
+        return "20mm";
+    }
+  };
 
   // Debounced parsing to prevent keyboard rendering lag on large documents
   useEffect(() => {
@@ -79,6 +93,7 @@ export default function PreviewPanel() {
         <div
           id="ink-preview-container"
           className={`markdown-body theme-${currentTheme} min-h-full`}
+          style={{ padding: getMarginPadding() }}
           dangerouslySetInnerHTML={{ __html: renderedHtml }}
         />
       </div>
