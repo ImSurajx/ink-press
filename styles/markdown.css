@@ -191,11 +191,30 @@
 }
 
 .markdown-body hr {
-  height: 0.25em;
-  padding: 0;
-  margin: 24px 0;
-  background-color: var(--theme-border);
-  border: 0;
+  border: none !important;
+  height: 40px !important; /* Height of the page gap */
+  margin: 40px -40px 40px -80px !important; /* Stretch across the notebook page width */
+  background-color: var(--theme-page-gap-bg, #f1f5f9) !important; /* Gray gap separating pages */
+  position: relative;
+  box-shadow: inset 0 5px 5px -5px rgba(0,0,0,0.05), inset 0 -5px 5px -5px rgba(0,0,0,0.05) !important;
+}
+
+/* Page break indicator label in preview */
+.markdown-body hr::after {
+  content: "PAGE BREAK";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--theme-background);
+  color: var(--theme-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--theme-border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 /* KaTeX custom formatting */
@@ -317,6 +336,16 @@
   .markdown-body h6 {
     break-after: avoid-page !important;
     page-break-after: avoid !important;
+  }
+
+  /* Style hr to trigger forced page breaks and render as a clean page break instead of a gap */
+  .markdown-body hr {
+    border: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    page-break-before: always !important;
+    break-before: page !important;
+    visibility: hidden !important;
   }
 }
 
