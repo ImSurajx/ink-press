@@ -292,8 +292,8 @@
 /* Print Media Stylesheet Overrides */
 @media print {
   @page {
-    margin-top: 2cm !important;
-    margin-bottom: 2cm !important;
+    margin-top: 1cm !important;
+    margin-bottom: 1cm !important;
     margin-left: 0mm !important;
     margin-right: 0mm !important;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2000' height='28'%3E%3Cline x1='0' y1='27' x2='2000' y2='27' stroke='black' stroke-opacity='0.08' stroke-width='1'/%3E%3Cline x1='59' y1='0' x2='59' y2='28' stroke='red' stroke-opacity='0.15' stroke-width='2'/%3E%3C/svg%3E") !important;
