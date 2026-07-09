@@ -322,7 +322,7 @@
   }
   
   html, body {
-    background-color: var(--theme-background) !important;
+    background-color: transparent !important;
     background-image: none !important; /* Handled by @page box container */
     print-color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;

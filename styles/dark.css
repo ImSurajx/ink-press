@@ -52,7 +52,7 @@
     background-position: left top !important;
   }
   html, body, .markdown-body.theme-dark {
-    background-color: #0f172a !important;
+    background-color: transparent !important;
     background-image: none !important;
   }
 }

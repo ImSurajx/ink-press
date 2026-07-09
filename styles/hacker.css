@@ -61,7 +61,7 @@
     background-position: left top !important;
   }
   html, body, .markdown-body.theme-hacker {
-    background-color: #000000 !important;
+    background-color: transparent !important;
     background-image: none !important;
   }
 }

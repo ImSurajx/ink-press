@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
                 background-color: ${themeBg} !important;
               }
               html, body {
-                background-color: ${themeBg} !important;
+                background-color: transparent !important;
               }
             }
           </style>
