@@ -118,8 +118,8 @@ export async function POST(req: NextRequest) {
 
             @media print {
               @page {
-                margin-top: 15mm !important;
-                margin-bottom: 15mm !important;
+                margin-top: 1in !important;
+                margin-bottom: 1in !important;
                 margin-left: 0mm !important;
                 margin-right: 0mm !important;
                 background-color: ${themeBg} !important;

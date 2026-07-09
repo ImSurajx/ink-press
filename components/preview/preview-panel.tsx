@@ -115,7 +115,7 @@ export default function PreviewPanel() {
         }
       };
 
-      const targetPageHeight = getPageHeightPx() - 120; // 120px padding margins buffer
+      const targetPageHeight = getPageHeightPx() - 192; // 192px buffer (1in top + 1in bottom margins)
       let currentHeight = 0;
 
       children.forEach((child: any) => {
