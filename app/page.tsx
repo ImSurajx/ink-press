@@ -11,7 +11,7 @@ import { useUIStore } from "@/lib/store/ui";
 import { useEditorStore } from "@/lib/store/editor";
 import { useSettingsStore } from "@/lib/store/settings";
 import { useThemeStore } from "@/lib/store/theme";
-import { Panel, Group as PanelGroup, Separator as PanelResizeHandle, ImperativePanelHandle } from "react-resizable-panels";
+import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from "react-resizable-panels";
 
 export default function Home() {
   const { activeTab } = useUIStore();
@@ -123,7 +123,7 @@ export default function Home() {
       <main className="flex flex-1 min-h-0 relative">
         {/* Desktop Layout (hidden on mobile) */}
         <div className="hidden md:flex flex-1 min-h-0 w-full">
-          <PanelGroup direction="horizontal" className="flex-1">
+          <PanelGroup orientation="horizontal" className="flex-1">
             {/* Left Panel: Markdown Editor */}
             <Panel defaultSize={50} minSize={25}>
               <EditorPanel />

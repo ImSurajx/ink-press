@@ -30,7 +30,7 @@ async function getBrowser() {
     const browser = await playwright.chromium.launch({
       executablePath,
       args: chromium.args,
-      headless: chromium.headless === "true" || chromium.headless === true,
+      headless: (chromium as any).headless === "true" || (chromium as any).headless === true,
     });
     return browser;
   }
@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
     browser.close().catch((err) => console.error("Error closing browser:", err));
 
     // Return the raw binary response as a downloadable attachment with dynamic name
-    return new Response(pdfBuffer, {
+    return new Response(new Uint8Array(pdfBuffer), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
