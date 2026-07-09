@@ -124,7 +124,7 @@ export default function EditorPanel() {
           onChange={(val) => setMarkdown(val)}
           theme={resolvedTheme === "dark" ? "dark" : "light"}
           extensions={[
-            markdownLang({ base: markdownLang(), codeLanguages: languages }),
+            markdownLang({ codeLanguages: languages }),
             EditorView.lineWrapping,
           ]}
           basicSetup={{
