@@ -98,7 +98,7 @@ export default function Header() {
     reader.readAsText(file);
   };
 
-  const triggerPDFExport = async () => {
+  const triggerPDFExport = () => {
     const previewContainer = document.getElementById("ink-preview-container");
     if (!previewContainer) {
       alert("Error: Preview container not found.");
@@ -107,51 +107,39 @@ export default function Header() {
 
     setExporting(true);
 
-    try {
-      const response = await fetch("/api/export", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          html: previewContainer.innerHTML,
-          theme: currentTheme,
-          customCSS,
-          pageSize,
-        }),
-      });
+    const downloadName = fileName.endsWith(".md") 
+      ? fileName.replace(".md", ".pdf") 
+      : `${fileName}.pdf`;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to generate PDF");
-      }
+    // Create temporary form to trigger browser native download attachment handler
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/api/export";
+    form.target = "_blank";
+    form.style.display = "none";
 
-      // Convert response to blob
-      const blob = await response.blob();
-      
-      // Download the PDF
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      const downloadName = fileName.endsWith(".md") 
-        ? fileName.replace(".md", ".pdf") 
-        : `${fileName}.pdf`;
-      link.download = downloadName;
-      document.body.appendChild(link);
-      link.click();
-      
-      // Delay cleanup to allow browser download manager to resolve blob payload
-      setTimeout(() => {
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      }, 1000);
+    const addInput = (name: string, value: string) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    };
 
-    } catch (error: any) {
-      console.error("PDF Export Error:", error);
-      alert(`Export failed: ${error.message || error}`);
-    } finally {
+    addInput("html", previewContainer.innerHTML);
+    addInput("theme", currentTheme);
+    addInput("customCSS", customCSS);
+    addInput("pageSize", pageSize);
+    addInput("downloadName", downloadName);
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Release loader and cleanup form after standard generation duration threshold
+    setTimeout(() => {
+      document.body.removeChild(form);
       setExporting(false);
-    }
+    }, 5000);
   };
 
   const themes: { value: ThemeType; label: string }[] = [

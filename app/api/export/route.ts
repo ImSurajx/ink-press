@@ -38,7 +38,30 @@ async function getBrowser() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { html, theme, customCSS, pageSize = "A4" } = await req.json();
+    let html = "";
+    let theme = "";
+    let customCSS = "";
+    let pageSize = "A4";
+    let downloadName = "ink-press-document.pdf";
+
+    const contentType = req.headers.get("content-type") || "";
+
+    if (contentType.includes("application/json")) {
+      const body = await req.json();
+      html = body.html;
+      theme = body.theme;
+      customCSS = body.customCSS;
+      pageSize = body.pageSize || "A4";
+      downloadName = body.downloadName || "ink-press-document.pdf";
+    } else {
+      // Parse form data from form-url-encoded or multipart submissions
+      const formData = await req.formData();
+      html = formData.get("html") as string || "";
+      theme = formData.get("theme") as string || "";
+      customCSS = formData.get("customCSS") as string || "";
+      pageSize = formData.get("pageSize") as string || "A4";
+      downloadName = formData.get("downloadName") as string || "ink-press-document.pdf";
+    }
 
     if (!html) {
       return NextResponse.json({ error: "No HTML content provided" }, { status: 400 });
@@ -122,12 +145,12 @@ export async function POST(req: NextRequest) {
 
     await browser.close();
 
-    // Return the response as a downloadable attachment
-    return new NextResponse(pdfBuffer, {
+    // Return the raw binary response as a downloadable attachment
+    return new Response(pdfBuffer, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="ink-press-document.pdf"',
+        "Content-Disposition": `attachment; filename="${downloadName}"`,
         "Content-Length": pdfBuffer.length.toString(),
       },
     });
