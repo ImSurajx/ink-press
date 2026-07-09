@@ -266,8 +266,8 @@
     background-repeat: repeat !important;
     background-position: left top !important;
     background-attachment: scroll !important;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 
   .markdown-body,

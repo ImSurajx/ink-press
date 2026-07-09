@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     // Construct the printable HTML page
     const fullHtml = `
       <!DOCTYPE html>
-      <html>
+      <html class="theme-${theme || "github"}">
         <head>
           <meta charset="utf-8" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
