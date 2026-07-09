@@ -11,7 +11,7 @@ import mermaid from "mermaid";
 export default function PreviewPanel() {
   const { markdown } = useEditorStore();
   const { currentTheme, customCSS } = useThemeStore();
-  const { marginType, orientation } = useSettingsStore();
+  const { marginType } = useSettingsStore();
   const { resolvedTheme } = useTheme();
   const [renderedHtml, setRenderedHtml] = useState("");
 
@@ -24,20 +24,6 @@ export default function PreviewPanel() {
       case "normal":
       default:
         return "20mm";
-    }
-  };
-
-  const getOrientationStyles = () => {
-    if (orientation === "landscape") {
-      return {
-        maxWidth: "100%",
-        width: "1123px", // A4 Landscape width ratio
-      };
-    } else {
-      return {
-        maxWidth: "800px",
-        width: "100%",
-      };
     }
   };
 
@@ -106,10 +92,9 @@ export default function PreviewPanel() {
 
         <div
           id="ink-preview-container"
-          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm transition-all duration-300`}
+          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm max-w-[800px] w-full`}
           style={{
             padding: getMarginPadding(),
-            ...getOrientationStyles(),
           }}
           dangerouslySetInnerHTML={{ __html: renderedHtml }}
         />
