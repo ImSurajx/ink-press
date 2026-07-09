@@ -35,25 +35,26 @@ export default function Home() {
       <main className="flex flex-1 min-h-0 relative">
         {/* Desktop Layout (hidden on mobile) */}
         <div className="hidden md:flex flex-1 min-h-0 w-full">
-          <PanelGroup
-            direction="horizontal"
-            onLayoutChange={(sizes) => setPanelSizes(sizes)}
-            className="flex-1"
-          >
-            {/* Left Panel: Markdown Editor */}
-            <Panel defaultSize={panelSizes[0] ?? 50} minSize={20}>
-              <EditorPanel />
+          <PanelGroup direction="horizontal" className="flex-1">
+            {/* Main Area: Editor + Preview split (always 50-50 relative to each other) */}
+            <Panel defaultSize={isSidebarOpen ? 80 : 100} minSize={65}>
+              <PanelGroup direction="horizontal" className="flex-1">
+                {/* Left Panel: Markdown Editor */}
+                <Panel defaultSize={50} minSize={25}>
+                  <EditorPanel />
+                </Panel>
+
+                {/* Resizable Divider */}
+                <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
+
+                {/* Right Panel: Live HTML Preview */}
+                <Panel defaultSize={50} minSize={25}>
+                  <PreviewPanel />
+                </Panel>
+              </PanelGroup>
             </Panel>
 
-            {/* Resizable Divider */}
-            <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
-
-            {/* Right Panel: Live HTML Preview */}
-            <Panel defaultSize={panelSizes[1] ?? 50} minSize={20}>
-              <PreviewPanel />
-            </Panel>
-
-            {/* Settings Sidebar (Desktop side panel) */}
+            {/* Settings Sidebar */}
             {isSidebarOpen && (
               <>
                 <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
