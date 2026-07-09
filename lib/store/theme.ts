@@ -20,6 +20,7 @@ export type ThemeType =
 
 interface ThemeState {
   currentTheme: ThemeType;
+  previousTheme: ThemeType;
   customCSS: string;
   setCurrentTheme: (theme: ThemeType) => void;
   setCustomCSS: (css: string) => void;
@@ -39,8 +40,13 @@ const defaultCustomCSS = `/* Custom Stylesheet
 
 export const useThemeStore = create<ThemeState>((set) => ({
   currentTheme: "github",
+  previousTheme: "github",
   customCSS: defaultCustomCSS,
-  setCurrentTheme: (currentTheme) => set({ currentTheme }),
+  setCurrentTheme: (theme) =>
+    set((state) => ({
+      currentTheme: theme,
+      previousTheme: theme !== "custom" ? theme : state.previousTheme,
+    })),
   setCustomCSS: (customCSS) => set({ customCSS }),
-  resetTheme: () => set({ currentTheme: "github", customCSS: defaultCustomCSS }),
+  resetTheme: () => set({ currentTheme: "github", previousTheme: "github", customCSS: defaultCustomCSS }),
 }));
