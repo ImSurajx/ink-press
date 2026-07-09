@@ -92,10 +92,14 @@ export async function POST(req: NextRequest) {
       ? fs.readFileSync(markdownCSSPath, "utf-8")
       : "";
 
+    // Extract active background color from theme CSS to apply to document canvas elements dynamically
+    const bgMatch = themeCSS.match(/--theme-background:\s*([^;]+)/);
+    const themeBg = bgMatch ? bgMatch[1].trim() : "#ffffff";
+
     // Construct the printable HTML page
     const fullHtml = `
       <!DOCTYPE html>
-      <html class="markdown-body theme-${theme || "github"}">
+      <html class="theme-${theme || "github"}">
         <head>
           <meta charset="utf-8" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -111,9 +115,15 @@ export async function POST(req: NextRequest) {
             ${markdownCSS}
             ${themeCSS}
             ${customCSS || ""}
+
+            @media print {
+              html, body {
+                background-color: ${themeBg} !important;
+              }
+            }
           </style>
         </head>
-        <body class="markdown-body theme-${theme || "github"}">
+        <body class="theme-${theme || "github"}">
           <div class="markdown-body theme-${theme || "github"}">
             ${html}
           </div>
