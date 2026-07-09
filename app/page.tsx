@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "@/components/layout/header";
 import StatusBar from "@/components/layout/status-bar";
 import EditorPanel from "@/components/editor/editor-panel";
@@ -8,26 +8,40 @@ import PreviewPanel from "@/components/preview/preview-panel";
 import SettingsPanel from "@/components/settings/settings-panel";
 import CustomCSSDialog from "@/components/themes/custom-css-dialog";
 import { useUIStore } from "@/lib/store/ui";
-import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from "react-resizable-panels";
+import { Panel, Group as PanelGroup, Separator as PanelResizeHandle, ImperativePanelHandle } from "react-resizable-panels";
 
 export default function Home() {
-  const { isSidebarOpen, activeTab, panelSizes, setPanelSizes } = useUIStore();
+  const { isSidebarOpen, setSidebarOpen, activeTab } = useUIStore();
   const [isMounted, setIsMounted] = useState(false);
+  const settingsPanelRef = useRef<ImperativePanelHandle>(null);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  // Synchronize settings panel expansion/collapse with UI Zustand store toggles
+  useEffect(() => {
+    if (!isMounted) return;
+    const panel = settingsPanelRef.current;
+    if (panel) {
+      if (isSidebarOpen) {
+        panel.expand();
+      } else {
+        panel.collapse();
+      }
+    }
+  }, [isSidebarOpen, isMounted]);
+
   if (!isMounted) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-background text-muted-foreground font-mono text-sm">
+      <div className="flex h-screen w-full items-center justify-center bg-background text-muted-foreground font-mono text-sm">
         Loading ink-press...
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-background text-foreground">
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-background text-foreground">
       {/* Header Toolbar */}
       <Header />
 
@@ -37,7 +51,7 @@ export default function Home() {
         <div className="hidden md:flex flex-1 min-h-0 w-full">
           <PanelGroup direction="horizontal" className="flex-1">
             {/* Main Area: Editor + Preview split (always 50-50 relative to each other) */}
-            <Panel defaultSize={isSidebarOpen ? 80 : 100} minSize={65}>
+            <Panel minSize={60}>
               <PanelGroup direction="horizontal" className="flex-1">
                 {/* Left Panel: Markdown Editor */}
                 <Panel defaultSize={50} minSize={25}>
@@ -54,15 +68,22 @@ export default function Home() {
               </PanelGroup>
             </Panel>
 
-            {/* Settings Sidebar */}
+            {/* Settings Sidebar (Collapsible Panel) */}
             {isSidebarOpen && (
-              <>
-                <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
-                <Panel defaultSize={20} minSize={15} maxSize={35}>
-                  <SettingsPanel />
-                </Panel>
-              </>
+              <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
             )}
+            <Panel
+              ref={settingsPanelRef}
+              collapsible={true}
+              defaultSize={isSidebarOpen ? 20 : 0}
+              minSize={15}
+              maxSize={35}
+              onCollapse={() => setSidebarOpen(false)}
+              onExpand={() => setSidebarOpen(true)}
+              className="transition-all duration-300"
+            >
+              <SettingsPanel />
+            </Panel>
           </PanelGroup>
         </div>
 
