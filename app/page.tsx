@@ -11,26 +11,12 @@ import { useUIStore } from "@/lib/store/ui";
 import { Panel, Group as PanelGroup, Separator as PanelResizeHandle, ImperativePanelHandle } from "react-resizable-panels";
 
 export default function Home() {
-  const { isSidebarOpen, setSidebarOpen, activeTab } = useUIStore();
+  const { activeTab } = useUIStore();
   const [isMounted, setIsMounted] = useState(false);
-  const settingsPanelRef = useRef<ImperativePanelHandle>(null);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  // Synchronize settings panel expansion/collapse with UI Zustand store toggles
-  useEffect(() => {
-    if (!isMounted) return;
-    const panel = settingsPanelRef.current;
-    if (panel) {
-      if (isSidebarOpen) {
-        panel.expand();
-      } else {
-        panel.collapse();
-      }
-    }
-  }, [isSidebarOpen, isMounted]);
 
   if (!isMounted) {
     return (
@@ -50,43 +36,17 @@ export default function Home() {
         {/* Desktop Layout (hidden on mobile) */}
         <div className="hidden md:flex flex-1 min-h-0 w-full">
           <PanelGroup direction="horizontal" className="flex-1">
-            {/* Main Area: Editor + Preview split (always 50-50 relative to each other) */}
-            <Panel defaultSize={80} minSize={60}>
-              <PanelGroup direction="horizontal" className="flex-1">
-                {/* Left Panel: Markdown Editor */}
-                <Panel defaultSize={50} minSize={25}>
-                  <EditorPanel />
-                </Panel>
-
-                {/* Resizable Divider */}
-                <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
-
-                {/* Right Panel: Live HTML Preview */}
-                <Panel defaultSize={50} minSize={25}>
-                  <PreviewPanel />
-                </Panel>
-              </PanelGroup>
+            {/* Left Panel: Markdown Editor */}
+            <Panel defaultSize={50} minSize={25}>
+              <EditorPanel />
             </Panel>
 
-            {/* Settings Sidebar (Collapsible Panel) */}
-            {isSidebarOpen && (
-              <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
-            )}
-            <Panel
-              ref={settingsPanelRef}
-              collapsible={true}
-              defaultSize={isSidebarOpen ? 20 : 0}
-              minSize={15}
-              maxSize={35}
-              onResize={(size) => {
-                if (size === 0 && isSidebarOpen) {
-                  setSidebarOpen(false);
-                } else if (size > 0 && !isSidebarOpen) {
-                  setSidebarOpen(true);
-                }
-              }}
-            >
-              {isSidebarOpen && <SettingsPanel />}
+            {/* Resizable Divider */}
+            <PanelResizeHandle className="w-1.5 hover:w-2 bg-border hover:bg-primary/20 transition-all cursor-col-resize flex-shrink-0" />
+
+            {/* Right Panel: Live HTML Preview */}
+            <Panel defaultSize={50} minSize={25}>
+              <PreviewPanel />
             </Panel>
           </PanelGroup>
         </div>
@@ -95,12 +55,14 @@ export default function Home() {
         <div className="md:hidden flex flex-1 flex-col min-h-0 w-full">
           {activeTab === "editor" && <EditorPanel />}
           {activeTab === "preview" && <PreviewPanel />}
-          {activeTab === "settings" && <SettingsPanel />}
         </div>
       </main>
 
       {/* Footer Status Bar */}
       <StatusBar />
+
+      {/* Page Export Settings Modal Pop-up */}
+      <SettingsPanel />
 
       {/* Theme Custom CSS Editor Modal */}
       <CustomCSSDialog />
