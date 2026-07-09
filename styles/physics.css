@@ -14,6 +14,7 @@
   --theme-code-bg: #e5e8e8;
   --theme-code-color: #c0392b;
   --theme-code-block-bg: #1c2833;   /* Slate code console */
+  --theme-code-block-color: #f0f4f8;
   --theme-mermaid-bg: #ffffff;
 
   --ink-font-sans: "Lora", Georgia, Cambria, serif;

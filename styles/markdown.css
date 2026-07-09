@@ -161,6 +161,7 @@
   font-size: 85%;
   line-height: 1.45;
   background-color: var(--theme-code-block-bg);
+  color: var(--theme-code-block-color, inherit);
   border-radius: var(--ink-border-radius);
   font-family: var(--ink-font-mono) !important;
   border: 1px solid var(--theme-border);

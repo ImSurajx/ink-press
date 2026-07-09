@@ -14,6 +14,7 @@
   --theme-code-bg: #edf2f7;
   --theme-code-color: #e53e3e;
   --theme-code-block-bg: #1a202c;   /* Dark console coding blocks */
+  --theme-code-block-color: #f7fafc;
   --theme-mermaid-bg: #ffffff;
 
   --ink-font-sans: "Comic Neue", "Comic Sans MS", cursive, sans-serif;
