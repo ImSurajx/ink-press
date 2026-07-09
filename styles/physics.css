@@ -1,0 +1,58 @@
+/* Physics Note Theme */
+
+.markdown-body.theme-physics {
+  --theme-background: #f4f7f6;      /* Off-white light slate blue tint */
+  --theme-foreground: #2c3e50;      /* Dark slate */
+  --theme-heading: #1a252f;
+  --theme-border: #bdc3c7;
+  --theme-muted: #7f8c8d;
+  --theme-link: #2980b9;
+  --theme-quote-border: #2980b9;
+  --theme-quote-bg: #ebf5fb;
+  --theme-table-header-bg: #d5dbdb;
+  --theme-table-zebra-bg: #eaecee;
+  --theme-code-bg: #e5e8e8;
+  --theme-code-color: #c0392b;
+  --theme-code-block-bg: #1c2833;   /* Slate code console */
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "Lora", Georgia, Cambria, serif;
+  --ink-font-mono: "JetBrains Mono", monospace;
+  --ink-line-height: 1.6;
+}
+
+.markdown-body.theme-physics {
+  padding: 40px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.markdown-body.theme-physics h1,
+.markdown-body.theme-physics h2,
+.markdown-body.theme-physics h3 {
+  font-family: var(--ink-font-sans);
+  font-weight: 700;
+  color: var(--theme-heading);
+}
+
+.markdown-body.theme-physics h1 {
+  border-bottom: 2px solid var(--theme-link);
+  padding-bottom: 0.3em;
+}
+
+.markdown-body.theme-physics blockquote {
+  border-left: 4px solid var(--theme-quote-border);
+  background-color: var(--theme-quote-bg);
+  padding: 12px 18px;
+  border-radius: 4px;
+}
+
+.markdown-body.theme-physics pre {
+  border: 1px solid var(--theme-border);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.markdown-body.theme-physics .mermaid {
+  border: 1px solid var(--theme-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}

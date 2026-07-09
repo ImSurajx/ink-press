@@ -1,0 +1,48 @@
+/* Biology Note Theme */
+
+.markdown-body.theme-biology {
+  --theme-background: #fcfdfa;      /* Soft natural white */
+  --theme-foreground: #2d382d;      /* Leaf charcoal */
+  --theme-heading: #1e3f20;         /* Forest green headings */
+  --theme-border: #d4dfd4;
+  --theme-muted: #5e7a5e;
+  --theme-link: #3b7a3b;
+  --theme-quote-border: #3b7a3b;
+  --theme-quote-bg: #f2f7f2;
+  --theme-table-header-bg: #e2ede2;
+  --theme-table-zebra-bg: #f5f9f5;
+  --theme-code-bg: #f2f7f2;
+  --theme-code-color: #8b4513;      /* Sienna brown inline code */
+  --theme-code-block-bg: #273627;
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "Lora", Georgia, serif;
+  --ink-font-mono: "Fira Code", monospace;
+  --ink-line-height: 1.65;
+}
+
+.markdown-body.theme-biology {
+  padding: 40px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.markdown-body.theme-biology h1,
+.markdown-body.theme-biology h2,
+.markdown-body.theme-biology h3 {
+  font-family: var(--ink-font-sans);
+  font-weight: 700;
+  color: var(--theme-heading);
+}
+
+.markdown-body.theme-biology blockquote {
+  border-left: 4px solid var(--theme-quote-border);
+  background-color: var(--theme-quote-bg);
+  padding: 12px 18px;
+  border-radius: 4px;
+}
+
+.markdown-body.theme-biology img {
+  border: 1px solid var(--theme-border);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+}

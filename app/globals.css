@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -12,6 +12,16 @@
 @import "../styles/academic.css";
 @import "../styles/modern.css";
 @import "../styles/dark.css";
+@import "../styles/code-notes.css";
+@import "../styles/mathematics.css";
+@import "../styles/physics.css";
+@import "../styles/chemistry.css";
+@import "../styles/biology.css";
+@import "../styles/academic-paper.css";
+@import "../styles/notebook.css";
+@import "../styles/elegant-book.css";
+@import "../styles/hacker.css";
+@import "../styles/presentation.css";
 @import "../styles/print.css";
 
 @custom-variant dark (&:is(.dark *));

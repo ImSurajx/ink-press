@@ -1,0 +1,53 @@
+/* Monospace Hacker Terminal Theme */
+
+.markdown-body.theme-hacker {
+  --theme-background: #000000;
+  --theme-foreground: #00ff00;      /* Matrix Green */
+  --theme-heading: #00ff00;
+  --theme-border: #00ff00;
+  --theme-muted: #008800;
+  --theme-link: #00ffff;            /* Cyan links */
+  --theme-quote-border: #00ff00;
+  --theme-quote-bg: #051505;
+  --theme-table-header-bg: #051505;
+  --theme-table-zebra-bg: #000000;
+  --theme-code-bg: #051505;
+  --theme-code-color: #00ffff;
+  --theme-code-block-bg: #020b02;
+  --theme-mermaid-bg: #000000;
+
+  --ink-font-sans: "JetBrains Mono", "Fira Code", monospace;
+  --ink-font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --ink-line-height: 1.5;
+}
+
+.markdown-body.theme-hacker {
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.markdown-body.theme-hacker * {
+  font-family: var(--ink-font-sans) !important;
+}
+
+.markdown-body.theme-hacker h1,
+.markdown-body.theme-hacker h2,
+.markdown-body.theme-hacker h3 {
+  border-bottom: 1px solid var(--theme-border);
+  padding-bottom: 0.3em;
+  text-transform: uppercase;
+}
+
+.markdown-body.theme-hacker pre {
+  border: 1px solid var(--theme-border);
+}
+
+.markdown-body.theme-hacker code {
+  background-color: var(--theme-code-bg);
+}
+
+.markdown-body.theme-hacker table th,
+.markdown-body.theme-hacker table td {
+  border: 1px solid var(--theme-border);
+}

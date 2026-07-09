@@ -1,0 +1,63 @@
+/* Code Notes Theme */
+
+.markdown-body.theme-code-notes {
+  --theme-background: #fbfbf8;      /* Cream warm white */
+  --theme-foreground: #2d3748;      /* Warm dark slate */
+  --theme-heading: #1a202c;
+  --theme-border: #e2e8f0;
+  --theme-muted: #718096;
+  --theme-link: #3182ce;
+  --theme-quote-border: #3182ce;
+  --theme-quote-bg: #edf2f7;
+  --theme-table-header-bg: #edf2f7;
+  --theme-table-zebra-bg: #f7fafc;
+  --theme-code-bg: #edf2f7;
+  --theme-code-color: #e53e3e;
+  --theme-code-block-bg: #1a202c;   /* Dark console coding blocks */
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "Comic Neue", "Comic Sans MS", cursive, sans-serif;
+  --ink-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ink-line-height: 1.7;
+}
+
+.markdown-body.theme-code-notes {
+  padding: 40px;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.markdown-body.theme-code-notes h1,
+.markdown-body.theme-code-notes h2,
+.markdown-body.theme-code-notes h3 {
+  font-family: var(--ink-font-sans);
+  font-weight: 700;
+  color: var(--theme-heading);
+}
+
+.markdown-body.theme-code-notes blockquote {
+  border-left: 4px dashed var(--theme-quote-border);
+  padding: 12px 18px;
+  background-color: var(--theme-quote-bg);
+  border-radius: 6px;
+  font-style: italic;
+}
+
+.markdown-body.theme-code-notes pre {
+  border: 1px solid #2d3748;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  color: #f7fafc;
+}
+
+.markdown-body.theme-code-notes code {
+  font-size: 0.9em;
+}
+
+/* Print optimizations */
+@media print {
+  .markdown-body.theme-code-notes {
+    font-size: 11pt;
+    --theme-background: #ffffff;
+  }
+}

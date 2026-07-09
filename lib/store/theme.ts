@@ -1,6 +1,22 @@
 import { create } from "zustand";
 
-export type ThemeType = "github" | "minimal" | "academic" | "modern" | "dark" | "custom";
+export type ThemeType =
+  | "github"
+  | "minimal"
+  | "academic"
+  | "modern"
+  | "dark"
+  | "code-notes"
+  | "mathematics"
+  | "physics"
+  | "chemistry"
+  | "biology"
+  | "academic-paper"
+  | "notebook"
+  | "elegant-book"
+  | "hacker"
+  | "presentation"
+  | "custom";
 
 interface ThemeState {
   currentTheme: ThemeType;

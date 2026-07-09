@@ -102,12 +102,20 @@ export default function Header() {
   };
 
   const themes: { value: ThemeType; label: string }[] = [
-    { value: "github", label: "GitHub Light" },
+    { value: "github", label: "GitHub Notes" },
+    { value: "code-notes", label: "Code Notes (Comic Neue)" },
+    { value: "mathematics", label: "Mathematics Textbook" },
+    { value: "physics", label: "Physics Lecture Notes" },
+    { value: "chemistry", label: "Chemistry Lab Notes" },
+    { value: "biology", label: "Biology Notebook" },
+    { value: "academic-paper", label: "Academic LaTeX Paper" },
     { value: "minimal", label: "Minimalist" },
-    { value: "academic", label: "Academic (LaTeX)" },
-    { value: "modern", label: "Modern Dev" },
+    { value: "notebook", label: "Ruled Notebook" },
+    { value: "elegant-book", label: "Elegant Book Sepia" },
+    { value: "hacker", label: "Matrix Hacker Monospace" },
+    { value: "presentation", label: "Presentation Slide Deck" },
     { value: "dark", label: "Dark Mode" },
-    { value: "custom", label: "Custom CSS" },
+    { value: "custom", label: "Custom CSS Override" },
   ];
 
   return (

@@ -1,0 +1,57 @@
+/* Elegant Book Theme (Kindle/Apple Books Inspired) */
+
+.markdown-body.theme-elegant-book {
+  --theme-background: #fcf8f2;      /* Warm book paper sepia background */
+  --theme-foreground: #3c3c3c;      /* Soft charcoal */
+  --theme-heading: #1e1e1e;
+  --theme-border: #e8e2d5;
+  --theme-muted: #7d7568;
+  --theme-link: #8c6d48;
+  --theme-quote-border: #8c6d48;
+  --theme-quote-bg: #f9f5ed;
+  --theme-table-header-bg: #f2ebd9;
+  --theme-table-zebra-bg: #f9f5ed;
+  --theme-code-bg: #f2ebd9;
+  --theme-code-color: #8c6d48;
+  --theme-code-block-bg: #fcf8f2;
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "Lora", Georgia, serif;
+  --ink-font-mono: "Fira Code", monospace;
+  --ink-line-height: 1.8;           /* High line height for screen reading comfort */
+}
+
+.markdown-body.theme-elegant-book {
+  padding: 60px 80px;               /* Elegant wide margins */
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.markdown-body.theme-elegant-book h1,
+.markdown-body.theme-elegant-book h2,
+.markdown-body.theme-elegant-book h3 {
+  font-family: var(--ink-font-sans);
+  font-weight: 500;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-top: 40px;
+  text-align: center;               /* Centered book style headings */
+}
+
+.markdown-body.theme-elegant-book h1 { font-size: 1.8em; }
+.markdown-body.theme-elegant-book h2 { font-size: 1.4em; }
+.markdown-body.theme-elegant-book h3 { font-size: 1.15em; text-align: left; }
+
+.markdown-body.theme-elegant-book p + p {
+  text-indent: 1.5em;               /* Indent next paragraphs */
+  margin-top: -8px;
+}
+
+.markdown-body.theme-elegant-book blockquote {
+  border-left: 2px solid var(--theme-quote-border);
+  padding: 0 20px;
+  margin: 30px 0;
+  font-style: italic;
+  color: var(--theme-muted);
+}

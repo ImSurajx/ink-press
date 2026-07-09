@@ -1,0 +1,61 @@
+/* Lined Notebook Paper Theme */
+
+.markdown-body.theme-notebook {
+  --theme-background: #fffdf5;      /* Warm legal pad yellow/white */
+  --theme-foreground: #2b2b2a;
+  --theme-heading: #111111;
+  --theme-border: #ccd6dd;
+  --theme-muted: #657786;
+  --theme-link: #ff4500;
+  --theme-quote-border: #ff4500;
+  --theme-quote-bg: #fffbf0;
+  --theme-table-header-bg: #f5f8fa;
+  --theme-table-zebra-bg: #fffdf5;
+  --theme-code-bg: #f5f8fa;
+  --theme-code-color: #ff4500;
+  --theme-code-block-bg: #ffffff;
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "Comic Neue", "Comic Sans MS", cursive, sans-serif;
+  --ink-font-mono: "Fira Code", monospace;
+  --ink-line-height: 1.6;
+}
+
+.markdown-body.theme-notebook {
+  padding: 40px 40px 40px 80px;    /* Extra padding on left for binding/margin line */
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 100% 28px;       /* Simulates notebook ruled lines */
+  line-height: 28px !important;     /* Force text spacing onto lines */
+}
+
+/* Red legal margin vertical rule line */
+.markdown-body.theme-notebook::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 60px;
+  width: 2px;
+  background-color: rgba(255, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.markdown-body.theme-notebook h1,
+.markdown-body.theme-notebook h2,
+.markdown-body.theme-notebook h3 {
+  font-family: var(--ink-font-sans);
+  color: #1a0dab;                  /* Blue ink color for headings */
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-top: 28px;
+}
+
+.markdown-body.theme-notebook blockquote {
+  border-left: 3px solid var(--theme-quote-border);
+  padding: 0 16px;
+  margin: 28px 0;
+}

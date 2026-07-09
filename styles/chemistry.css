@@ -1,0 +1,49 @@
+/* Chemistry & Lab Notes Theme */
+
+.markdown-body.theme-chemistry {
+  --theme-background: #fafdfc;      /* Minty warm paper */
+  --theme-foreground: #2f4f4f;      /* Dark slate green */
+  --theme-heading: #0f3d3d;
+  --theme-border: #ccd9d9;
+  --theme-muted: #668c8c;
+  --theme-link: #008080;            /* Teal links */
+  --theme-quote-border: #008080;
+  --theme-quote-bg: #e6f2f2;
+  --theme-table-header-bg: #e6f2f2;
+  --theme-table-zebra-bg: #f2f9f9;
+  --theme-code-bg: #e6f2f2;
+  --theme-code-color: #99004d;
+  --theme-code-block-bg: #1f3030;
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "Merriweather", Georgia, serif;
+  --ink-font-mono: "Fira Code", monospace;
+  --ink-line-height: 1.65;
+}
+
+.markdown-body.theme-chemistry {
+  padding: 40px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.markdown-body.theme-chemistry h1,
+.markdown-body.theme-chemistry h2,
+.markdown-body.theme-chemistry h3 {
+  font-family: var(--ink-font-sans);
+  font-weight: 700;
+  color: var(--theme-heading);
+}
+
+.markdown-body.theme-chemistry blockquote {
+  border-left: 4px solid var(--theme-quote-border);
+  background-color: var(--theme-quote-bg);
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+.markdown-body.theme-chemistry pre {
+  border: 1px solid var(--theme-border);
+  border-radius: 6px;
+}

@@ -1,0 +1,80 @@
+/* Mathematics & Academic Textbook Theme */
+
+.markdown-body.theme-mathematics {
+  --theme-background: #fdfdfb;      /* Warm book-cream paper color */
+  --theme-foreground: #1c1c1c;      /* Solid dark */
+  --theme-heading: #0f1c30;         /* Deep academic navy */
+  --theme-border: #7f8c8d;          /* Darker book border styling */
+  --theme-muted: #555555;
+  --theme-link: #1b4f72;
+  --theme-quote-border: #0f1c30;
+  --theme-quote-bg: #f5f6f8;
+  --theme-table-header-bg: #e5e8e8;
+  --theme-table-zebra-bg: #fdfdfb;
+  --theme-code-bg: #eaeded;
+  --theme-code-color: #78281f;
+  --theme-code-block-bg: #fcfcfc;
+  --theme-mermaid-bg: #ffffff;
+
+  --ink-font-sans: "STIX Two Text", "Times New Roman", Times, Georgia, serif;
+  --ink-font-mono: "Fira Code", monospace;
+  --ink-line-height: 1.6;
+}
+
+.markdown-body.theme-mathematics {
+  padding: 50px 70px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.markdown-body.theme-mathematics h1,
+.markdown-body.theme-mathematics h2,
+.markdown-body.theme-mathematics h3 {
+  font-family: var(--ink-font-sans);
+  text-align: center;
+  font-weight: 700;
+  margin-top: 36px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.markdown-body.theme-mathematics h2 {
+  font-size: 1.35em;
+  text-align: left;
+  border-bottom: 1px solid var(--theme-border);
+  padding-bottom: 0.25em;
+}
+
+.markdown-body.theme-mathematics p + p {
+  text-indent: 2em;
+  margin-top: -12px;
+}
+
+/* Custom Math/Theorem Callouts */
+.markdown-body.theme-mathematics blockquote {
+  font-family: var(--ink-font-sans);
+  border-left: 3px solid var(--theme-quote-border);
+  background-color: var(--theme-quote-bg);
+  padding: 14px 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+  font-style: italic;
+  font-size: 0.98em;
+}
+
+/* Display equations centered space adjustments */
+.markdown-body.theme-mathematics .katex-display {
+  margin: 24px 0 !important;
+  color: #1b4f72;
+}
+
+@media print {
+  .markdown-body.theme-mathematics {
+    font-size: 11pt;
+    padding: 0 !important;
+    text-align: justify;
+  }
+}
