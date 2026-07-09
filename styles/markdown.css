@@ -10,19 +10,32 @@
 }
 
 .markdown-body {
-  font-family: var(--ink-font-sans);
+  font-family: "Comic Neue", "Comic Sans MS", cursive, sans-serif !important;
   font-size: 16px;
   line-height: var(--ruled-line-height, 28px) !important;
   word-wrap: break-word;
   color: var(--theme-foreground);
   background-color: var(--theme-background);
-  padding: 40px;
+  padding: 40px 40px 40px 80px; /* Notebook binding margins padding */
   margin: 0;
+  position: relative;
 
   /* Ruled Notebook Background (Linear Gradients) */
   background-image: linear-gradient(var(--ruled-line-color, rgba(0, 0, 0, 0.04)) 1px, transparent 1px);
   background-size: 100% var(--ruled-line-height, 28px);
   box-sizing: border-box;
+}
+
+/* Red vertical legal margin notebook line globally */
+.markdown-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 60px;
+  width: 2px;
+  background-color: var(--theme-ruled-margin-color, rgba(255, 0, 0, 0.2));
+  pointer-events: none;
 }
 
 /* Headings */
@@ -32,6 +45,7 @@
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
+  font-family: "Comic Neue", "Comic Sans MS", cursive, sans-serif !important;
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: 600;
@@ -136,7 +150,7 @@
   white-space: break-spaces;
   background-color: var(--theme-code-bg);
   border-radius: var(--ink-border-radius);
-  font-family: var(--ink-font-mono);
+  font-family: var(--ink-font-mono) !important;
   color: var(--theme-code-color);
 }
 
@@ -148,7 +162,7 @@
   line-height: 1.45;
   background-color: var(--theme-code-block-bg);
   border-radius: var(--ink-border-radius);
-  font-family: var(--ink-font-mono);
+  font-family: var(--ink-font-mono) !important;
   border: 1px solid var(--theme-border);
 }
 
