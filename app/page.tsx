@@ -116,13 +116,34 @@ export default function Home() {
 
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-background text-foreground">
-      {/* Header Toolbar */}
-      <Header />
+      {/* Mobile Screen Block Warning */}
+      <div className="md:hidden flex flex-col items-center justify-center min-h-screen w-full bg-slate-950 text-slate-100 p-6 font-sans">
+        <div className="max-w-md w-full border border-slate-800/80 bg-slate-900/40 backdrop-blur-lg px-6 py-10 rounded-2xl shadow-2xl flex flex-col items-center text-center gap-6">
+          <div className="h-14 w-14 bg-amber-500/10 text-amber-500 border border-amber-500/20 flex items-center justify-center rounded-2xl shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-lg font-bold tracking-tight">Desktop Screen Required</h1>
+            <p className="text-xs text-slate-400 leading-relaxed max-w-[280px] mx-auto">
+              This application is not operational on mobile screens. If you want to use it, please open it on a laptop or desktop computer.
+            </p>
+          </div>
+          <div className="h-[1px] w-1/2 bg-slate-800" />
+          <span className="text-[10px] font-mono tracking-wider text-muted-foreground uppercase select-none">
+            ink-press workspace
+          </span>
+        </div>
+      </div>
 
-      {/* Main Workspace Area */}
-      <main className="flex flex-1 min-h-0 relative">
-        {/* Desktop Layout (hidden on mobile) */}
-        <div className="hidden md:flex flex-1 min-h-0 w-full">
+      {/* Desktop Workspace (hidden on mobile) */}
+      <div className="hidden md:flex h-full w-full flex-col overflow-hidden">
+        {/* Header Toolbar */}
+        <Header />
+
+        {/* Main Workspace Area */}
+        <main className="flex flex-1 min-h-0 relative">
           <PanelGroup orientation="horizontal" className="flex-1">
             {/* Left Panel: Markdown Editor */}
             <Panel defaultSize={50} minSize={25}>
@@ -137,23 +158,17 @@ export default function Home() {
               <PreviewPanel />
             </Panel>
           </PanelGroup>
-        </div>
+        </main>
 
-        {/* Mobile Layout (hidden on desktop) */}
-        <div className="md:hidden flex flex-1 flex-col min-h-0 w-full">
-          {activeTab === "editor" && <EditorPanel />}
-          {activeTab === "preview" && <PreviewPanel />}
-        </div>
-      </main>
+        {/* Footer Status Bar */}
+        <StatusBar />
 
-      {/* Footer Status Bar */}
-      <StatusBar />
+        {/* Page Export Settings Modal Pop-up */}
+        <SettingsPanel />
 
-      {/* Page Export Settings Modal Pop-up */}
-      <SettingsPanel />
-
-      {/* Theme Custom CSS Editor Modal */}
-      <CustomCSSDialog />
+        {/* Theme Custom CSS Editor Modal */}
+        <CustomCSSDialog />
+      </div>
     </div>
   );
 }
