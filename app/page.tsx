@@ -78,9 +78,13 @@ export default function Home() {
               defaultSize={isSidebarOpen ? 20 : 0}
               minSize={15}
               maxSize={35}
-              onCollapse={() => setSidebarOpen(false)}
-              onExpand={() => setSidebarOpen(true)}
-              className="transition-all duration-300"
+              onResize={(size) => {
+                if (size === 0 && isSidebarOpen) {
+                  setSidebarOpen(false);
+                } else if (size > 0 && !isSidebarOpen) {
+                  setSidebarOpen(true);
+                }
+              }}
             >
               <SettingsPanel />
             </Panel>
