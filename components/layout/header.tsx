@@ -132,9 +132,15 @@ export default function Header() {
       form.appendChild(input);
     };
 
+    // Collect any dynamically injected Mermaid stylesheets to preserve styles during server-side PDF print compilation
+    const mermaidStyles = Array.from(document.querySelectorAll("style"))
+      .filter((s) => s.id?.startsWith("mermaid") || s.innerHTML.includes(".mermaid"))
+      .map((s) => s.innerHTML)
+      .join("\n");
+
     addInput("html", previewContainer.innerHTML);
     addInput("theme", currentTheme);
-    addInput("customCSS", customCSS);
+    addInput("customCSS", (customCSS || "") + "\n" + mermaidStyles);
     addInput("pageSize", pageSize);
     addInput("downloadName", downloadName);
 

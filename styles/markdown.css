@@ -3,7 +3,7 @@
 :root {
   --ink-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --ink-font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-  
+
   /* Shared Base Layout Variables */
   --ink-line-height: 1.6;
   --ink-border-radius: 6px;
@@ -16,7 +16,8 @@
   word-wrap: break-word;
   color: var(--theme-foreground);
   background-color: var(--theme-background);
-  padding: 40px 40px 40px 80px !important; /* Force notebook margins globally */
+  padding: 40px 40px 40px 80px !important;
+  /* Force notebook margins globally */
   margin: 0;
   position: relative;
 
@@ -53,12 +54,34 @@
   color: var(--theme-heading);
 }
 
-.markdown-body h1 { font-size: 2em; border-bottom: 1px solid var(--theme-border); padding-bottom: 0.3em; }
-.markdown-body h2 { font-size: 1.5em; border-bottom: 1px solid var(--theme-border); padding-bottom: 0.3em; }
-.markdown-body h3 { font-size: 1.25em; }
-.markdown-body h4 { font-size: 1em; }
-.markdown-body h5 { font-size: 0.875em; }
-.markdown-body h6 { font-size: 0.85em; color: var(--theme-muted); }
+.markdown-body h1 {
+  font-size: 2em;
+  border-bottom: 1px solid var(--theme-border);
+  padding-bottom: 0.3em;
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--theme-border);
+  padding-bottom: 0.3em;
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: 0.875em;
+}
+
+.markdown-body h6 {
+  font-size: 0.85em;
+  color: var(--theme-muted);
+}
 
 /* Paragraphs and spacing */
 .markdown-body p,
@@ -185,7 +208,8 @@
 .markdown-body pre .hljs-attribute,
 .markdown-body pre .hljs-attr,
 .markdown-body pre .hljs-string {
-  color: #dc143c !important; /* Crimson */
+  color: #dc143c !important;
+  /* Crimson */
 }
 
 /* Image styling */
@@ -230,7 +254,11 @@
 }
 
 .markdown-body .mermaid svg {
-  max-width: 100% !important;
+  max-width: 100%;
+  max-height: 800px !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 /* Custom Admonitions / Callout Containers */
@@ -250,30 +278,56 @@
   letter-spacing: 0.05em;
 }
 
-.markdown-body .admonition.note { border-left-color: #3182ce; background-color: rgba(49, 130, 206, 0.05); }
-.markdown-body .admonition.note .admonition-title { color: #2b6cb0; }
+.markdown-body .admonition.note {
+  border-left-color: #3182ce;
+  background-color: rgba(49, 130, 206, 0.05);
+}
 
-.markdown-body .admonition.warning { border-left-color: #dd6b20; background-color: rgba(221, 107, 32, 0.05); }
-.markdown-body .admonition.warning .admonition-title { color: #c05621; }
+.markdown-body .admonition.note .admonition-title {
+  color: #2b6cb0;
+}
 
-.markdown-body .admonition.danger { border-left-color: #e53e3e; background-color: rgba(229, 62, 62, 0.05); }
-.markdown-body .admonition.danger .admonition-title { color: #9b2c2c; }
+.markdown-body .admonition.warning {
+  border-left-color: #dd6b20;
+  background-color: rgba(221, 107, 32, 0.05);
+}
 
-.markdown-body .admonition.success { border-left-color: #38a169; background-color: rgba(56, 161, 105, 0.05); }
-.markdown-body .admonition.success .admonition-title { color: #2f855a; }
+.markdown-body .admonition.warning .admonition-title {
+  color: #c05621;
+}
+
+.markdown-body .admonition.danger {
+  border-left-color: #e53e3e;
+  background-color: rgba(229, 62, 62, 0.05);
+}
+
+.markdown-body .admonition.danger .admonition-title {
+  color: #9b2c2c;
+}
+
+.markdown-body .admonition.success {
+  border-left-color: #38a169;
+  background-color: rgba(56, 161, 105, 0.05);
+}
+
+.markdown-body .admonition.success .admonition-title {
+  color: #2f855a;
+}
 
 /* Auto page break gap styled as a physical page gap in screen preview */
-.markdown-body > .auto-page-break {
-  margin-top: 80px !important; /* Spacing gap */
+.markdown-body>.auto-page-break {
+  margin-top: 80px !important;
+  /* Spacing gap */
   position: relative !important;
 }
 
 /* Page break indicator line and label in preview */
-.markdown-body > .auto-page-break::before {
+.markdown-body>.auto-page-break::before {
   content: "" !important;
   position: absolute !important;
   top: -40px !important;
-  left: -80px !important; /* Stretch across left padding */
+  left: -80px !important;
+  /* Stretch across left padding */
   right: -40px !important;
   height: 2px !important;
   background-color: var(--theme-border) !important;
@@ -282,7 +336,7 @@
   display: block !important;
 }
 
-.markdown-body > .auto-page-break::after {
+.markdown-body>.auto-page-break::after {
   content: "PAGE BREAK" !important;
   position: absolute !important;
   left: 50% !important;
@@ -296,7 +350,7 @@
   padding: 4px 12px !important;
   border-radius: 12px !important;
   border: 1px solid var(--theme-border) !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
   z-index: 10 !important;
   display: block !important;
 }
@@ -313,10 +367,12 @@
     background-repeat: repeat !important;
     background-position: left top !important;
   }
-  
-  html, body {
+
+  html,
+  body {
     background-color: transparent !important;
-    background-image: none !important; /* Handled by @page box container */
+    background-image: none !important;
+    /* Handled by @page box container */
     print-color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;
   }
@@ -328,38 +384,38 @@
     background-image: none !important;
     box-shadow: none !important;
     border: none !important;
-    padding: 0px 40px 0px 80px !important; /* Remove container margins since @page margins handle them */
+    padding: 0px 40px 0px 80px !important;
+    /* Remove container margins since @page margins handle them */
     min-height: auto !important;
   }
 
   .markdown-body::before {
-    display: none !important; /* Hide block red line since the canvas handles it */
+    display: none !important;
+    /* Hide block red line since the canvas handles it */
   }
 
   /* Natural spacing at page breaks using item margins */
-  .markdown-body > * {
+  .markdown-body>* {
     margin-top: 14px !important;
     margin-bottom: 14px !important;
   }
 
   /* Style auto page break elements to trigger physical page breaks in PDF */
-  .markdown-body > .auto-page-break,
-  .markdown-body > .page-break-before {
+  .markdown-body>.auto-page-break,
+  .markdown-body>.page-break-before {
     margin-top: 0 !important;
     page-break-before: always !important;
     break-before: page !important;
   }
 
-  .markdown-body > .auto-page-break::before,
-  .markdown-body > .auto-page-break::after,
-  .markdown-body > .page-break-before::before,
-  .markdown-body > .page-break-before::after {
+  .markdown-body>.auto-page-break::before,
+  .markdown-body>.auto-page-break::after,
+  .markdown-body>.page-break-before::before,
+  .markdown-body>.page-break-before::after {
     display: none !important;
   }
 
   /* Prevent elements from cutting in half across PDF page boundaries */
-  .markdown-body p,
-  .markdown-body li,
   .markdown-body blockquote,
   .markdown-body pre,
   .markdown-body table,
@@ -405,4 +461,3 @@
     margin-right: auto !important;
   }
 }
-
