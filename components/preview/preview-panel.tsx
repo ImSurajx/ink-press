@@ -42,6 +42,17 @@ export default function PreviewPanel() {
     }
   };
 
+  const getPageHeightPx = () => {
+    switch (pageSize) {
+      case "Letter": return 1056;
+      case "Legal": return 1344;
+      case "A3": return 1587;
+      case "A5": return 794;
+      case "A4":
+      default: return 1123;
+    }
+  };
+
   // Debounced parsing to prevent keyboard rendering lag on large documents
   useEffect(() => {
     const handler = setTimeout(async () => {
@@ -104,17 +115,6 @@ export default function PreviewPanel() {
       const children = Array.from(container.children);
       if (children.length === 0) return;
 
-      const getPageHeightPx = () => {
-        switch (pageSize) {
-          case "Letter": return 1056;
-          case "Legal": return 1344;
-          case "A3": return 1587;
-          case "A5": return 794;
-          case "A4":
-          default: return 1123;
-        }
-      };
-
       const targetPageHeight = getPageHeightPx() - 76; // 76px buffer (1cm top + 1cm bottom margins)
       let currentHeight = 0;
 
@@ -165,11 +165,12 @@ export default function PreviewPanel() {
 
         <div
           id="ink-preview-container"
-          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm transition-all duration-300`}
+          className={`markdown-body theme-${currentTheme} mx-auto shadow-sm border border-border rounded-sm transition-all duration-300 flex-shrink-0`}
           style={{
             padding: getMarginPadding(),
             width: getPageWidth(),
             minWidth: getPageWidth(),
+            minHeight: getPageHeightPx(),
           }}
           dangerouslySetInnerHTML={{ __html: renderedHtml }}
         />
