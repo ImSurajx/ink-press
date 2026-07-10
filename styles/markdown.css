@@ -179,11 +179,12 @@
   color: inherit !important;
 }
 
-/* Syntax highlighting overrides for variables/attributes to be readable in dark code blocks */
+/* Syntax highlighting overrides for variables/attributes/strings to be readable in dark code blocks */
 .markdown-body pre .hljs-variable,
 .markdown-body pre .hljs-template-variable,
 .markdown-body pre .hljs-attribute,
-.markdown-body pre .hljs-attr {
+.markdown-body pre .hljs-attr,
+.markdown-body pre .hljs-string {
   color: #dc143c !important; /* Crimson */
 }
 
