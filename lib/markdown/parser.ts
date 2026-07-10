@@ -38,95 +38,44 @@ function rehypeMermaid() {
   }
 }
 
-// Custom Rehype plugin to convert both standalone and inline <br> elements to page breaks
-function rehypePageBreak() {
-  return (tree: any) => {
-    if (tree.type === "root" && tree.children) {
-      const newChildren: any[] = [];
-      for (const node of tree.children) {
-        if (node.type === "element" && node.tagName === "p") {
-          // Check if this paragraph contains a <br> (or raw <br>)
-          const hasBr = node.children?.some((child: any) => 
-            (child.type === "element" && child.tagName === "br") ||
-            (child.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(child.value))
-          );
-          
-          if (hasBr) {
-            // Split paragraph by <br> tags
-            let currentParaChildren: any[] = [];
-            for (const child of node.children) {
-              const isBr = 
-                (child.type === "element" && child.tagName === "br") ||
-                (child.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(child.value));
-              
-              if (isBr) {
-                // Push current paragraph if it has content
-                if (currentParaChildren.length > 0) {
-                  newChildren.push({
-                    type: "element",
-                    tagName: "p",
-                    properties: {},
-                    children: currentParaChildren,
-                  });
-                  currentParaChildren = [];
-                }
-                // Push page break div
-                newChildren.push({
-                  type: "element",
-                  tagName: "div",
-                  properties: { className: ["page-break-before"] },
-                  children: [],
-                });
-              } else {
-                currentParaChildren.push(child);
-              }
-            }
-            // Push remaining paragraph content if any
-            if (currentParaChildren.length > 0) {
-              newChildren.push({
-                type: "element",
-                tagName: "p",
-                properties: {},
-                children: currentParaChildren,
-              });
-            }
-          } else {
-            newChildren.push(node);
-          }
-        } else if (
-          (node.type === "element" && node.tagName === "br") ||
-          (node.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(node.value))
-        ) {
-          // Standalone top-level <br>
-          newChildren.push({
-            type: "element",
-            tagName: "div",
-            properties: { className: ["page-break-before"] },
-            children: [],
-          });
-        } else {
-          newChildren.push(node);
-        }
-      }
-      tree.children = newChildren;
+function preprocessMarkdown(markdown: string): string {
+  if (!markdown) return "";
+  // Split the markdown by fenced code blocks (``` ... ```)
+  const parts = markdown.split(/(```[\s\S]*?```)/g);
+  
+  return parts.map((part) => {
+    // If it is a fenced code block, do not replace inside it
+    if (part.startsWith("```")) {
+      return part;
     }
-  };
+    
+    // Split by inline code blocks (`...`)
+    const inlineParts = part.split(/(`[^`\n]*?`)/g);
+    return inlineParts.map((inlinePart) => {
+      // If it is inline code, do not replace inside it
+      if (inlinePart.startsWith("`")) {
+        return inlinePart;
+      }
+      // Replace <br> and <br /> (case-insensitive) with block-level page breaks
+      return inlinePart.replace(/<br\s*\/?>/gi, '\n\n<div class="page-break-before"></div>\n\n');
+    }).join("");
+  }).join("");
 }
 
 export async function parseMarkdown(markdown: string): Promise<string> {
+  const preprocessed = preprocessMarkdown(markdown);
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeMermaid) // Handle Mermaid blocks before syntax highlighter
-    .use(rehypePageBreak) // Convert top-level <br> tags to page breaks
     .use(rehypeKatex)
     .use(rehypeHighlight, { detect: true, ignoreMissing: true })
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: "wrap" })
     .use(rehypeStringify, { allowDangerousHtml: true })
-    .process(markdown);
+    .process(preprocessed);
 
   return String(file);
 }

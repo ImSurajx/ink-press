@@ -40,7 +40,15 @@ describe("Markdown Parser Pipeline", () => {
     const markdown = "Hello <br> World";
     const result = await parseMarkdown(markdown);
     expect(result).toContain("<div class=\"page-break-before\"></div>");
-    expect(result).toContain("<p>Hello </p>");
-    expect(result).toContain("<p> World</p>");
+    expect(result).toContain("<p>Hello</p>");
+    expect(result).toContain("<p>World</p>");
+  });
+
+  it("should keep <br> tags inside code blocks and inline code", async () => {
+    const markdown = "Use `<br>` inline or:\n```html\n<br>\n```";
+    const result = await parseMarkdown(markdown);
+    expect(result).toContain("<code>&#x3C;br></code>");
+    expect(result).toContain("&#x3C;br>");
+    expect(result).not.toContain("page-break-before");
   });
 });
