@@ -159,7 +159,7 @@ export default function PreviewPanel() {
       </div>
 
       {/* Rendered HTML Container */}
-      <div className="flex-1 w-full h-full overflow-auto p-6 scroll-smooth bg-background">
+      <div className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto p-4 md:p-6 scroll-smooth bg-background flex flex-col items-center">
         {/* Custom CSS overrides injected directly */}
         <style dangerouslySetInnerHTML={{ __html: customCSS }} />
 
