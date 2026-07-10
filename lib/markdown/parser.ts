@@ -38,24 +38,77 @@ function rehypeMermaid() {
   }
 }
 
-// Custom Rehype plugin to convert top-level <br> elements to page breaks
+// Custom Rehype plugin to convert both standalone and inline <br> elements to page breaks
 function rehypePageBreak() {
   return (tree: any) => {
     if (tree.type === "root" && tree.children) {
-      tree.children = tree.children.map((node: any) => {
-        if (
+      const newChildren: any[] = [];
+      for (const node of tree.children) {
+        if (node.type === "element" && node.tagName === "p") {
+          // Check if this paragraph contains a <br> (or raw <br>)
+          const hasBr = node.children?.some((child: any) => 
+            (child.type === "element" && child.tagName === "br") ||
+            (child.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(child.value))
+          );
+          
+          if (hasBr) {
+            // Split paragraph by <br> tags
+            let currentParaChildren: any[] = [];
+            for (const child of node.children) {
+              const isBr = 
+                (child.type === "element" && child.tagName === "br") ||
+                (child.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(child.value));
+              
+              if (isBr) {
+                // Push current paragraph if it has content
+                if (currentParaChildren.length > 0) {
+                  newChildren.push({
+                    type: "element",
+                    tagName: "p",
+                    properties: {},
+                    children: currentParaChildren,
+                  });
+                  currentParaChildren = [];
+                }
+                // Push page break div
+                newChildren.push({
+                  type: "element",
+                  tagName: "div",
+                  properties: { className: ["page-break-before"] },
+                  children: [],
+                });
+              } else {
+                currentParaChildren.push(child);
+              }
+            }
+            // Push remaining paragraph content if any
+            if (currentParaChildren.length > 0) {
+              newChildren.push({
+                type: "element",
+                tagName: "p",
+                properties: {},
+                children: currentParaChildren,
+              });
+            }
+          } else {
+            newChildren.push(node);
+          }
+        } else if (
           (node.type === "element" && node.tagName === "br") ||
           (node.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(node.value))
         ) {
-          return {
+          // Standalone top-level <br>
+          newChildren.push({
             type: "element",
             tagName: "div",
             properties: { className: ["page-break-before"] },
             children: [],
-          };
+          });
+        } else {
+          newChildren.push(node);
         }
-        return node;
-      });
+      }
+      tree.children = newChildren;
     }
   };
 }

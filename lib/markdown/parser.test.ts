@@ -36,10 +36,11 @@ describe("Markdown Parser Pipeline", () => {
     expect(result).toContain("<div class=\"page-break-before\"></div>");
   });
 
-  it("should keep inline <br> tags as normal line breaks", async () => {
+  it("should convert inline <br> tags to page-break-before divs by splitting paragraphs", async () => {
     const markdown = "Hello <br> World";
     const result = await parseMarkdown(markdown);
-    expect(result).toContain("<br>");
-    expect(result).not.toContain("page-break-before");
+    expect(result).toContain("<div class=\"page-break-before\"></div>");
+    expect(result).toContain("<p>Hello </p>");
+    expect(result).toContain("<p> World</p>");
   });
 });
