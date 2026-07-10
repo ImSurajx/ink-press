@@ -6,12 +6,14 @@ import { useThemeStore } from "@/lib/store/theme";
 import { parseMarkdown } from "@/lib/markdown/parser";
 import { useSettingsStore } from "@/lib/store/settings";
 import { useTheme } from "next-themes";
+import { useUIStore } from "@/lib/store/ui";
 import mermaid from "mermaid";
 
 export default function PreviewPanel() {
   const { markdown } = useEditorStore();
   const { currentTheme, customCSS } = useThemeStore();
   const { marginType, pageSize } = useSettingsStore();
+  const { isSidebarOpen, isCustomCSSOpen, activeTab } = useUIStore();
   const { resolvedTheme } = useTheme();
   const [renderedHtml, setRenderedHtml] = useState("");
 
@@ -130,7 +132,7 @@ export default function PreviewPanel() {
     };
 
     runMermaidRender();
-  }, [renderedHtml]);
+  }, [renderedHtml, currentTheme, customCSS, pageSize, marginType, isSidebarOpen, isCustomCSSOpen, activeTab]);
 
   // Dynamic automatic page break annotation based on page size and content heights
   useEffect(() => {
