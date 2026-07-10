@@ -118,6 +118,11 @@ export default function PreviewPanel() {
       const targetPageHeight = getPageHeightPx() - 76; // 76px buffer (1cm top + 1cm bottom margins)
       let currentHeight = 0;
 
+      // Temporarily strip auto-page-break to measure natural margins & heights accurately
+      children.forEach((child: any) => {
+        child.classList.remove("auto-page-break");
+      });
+
       children.forEach((child: any) => {
         if (child.tagName === "STYLE" || child.style.display === "none") return;
 
@@ -137,7 +142,6 @@ export default function PreviewPanel() {
           child.classList.add("auto-page-break");
           currentHeight = totalHeight;
         } else {
-          child.classList.remove("auto-page-break");
           currentHeight += totalHeight;
         }
       });
