@@ -389,3 +389,20 @@
   }
 }
 
+/* Responsive preview scale-down for mobile/tablet screens to fit page width visually without reflowing */
+@media (max-width: 767px) {
+  #ink-preview-container {
+    zoom: 0.46 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  #ink-preview-container {
+    zoom: 0.8 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
