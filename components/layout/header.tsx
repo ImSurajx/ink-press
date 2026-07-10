@@ -198,7 +198,7 @@ export default function Header() {
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => setActiveTab("editor")}>Editor</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setActiveTab("preview")}>Preview</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setActiveTab("settings")}>Settings</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSidebarOpen(true)}>Settings</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

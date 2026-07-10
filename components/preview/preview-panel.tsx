@@ -159,16 +159,17 @@ export default function PreviewPanel() {
       </div>
 
       {/* Rendered HTML Container */}
-      <div className="flex-1 w-full h-full overflow-y-auto p-6 scroll-smooth bg-background">
+      <div className="flex-1 w-full h-full overflow-x-hidden overflow-y-auto p-4 md:p-6 scroll-smooth bg-background flex flex-col items-center">
         {/* Custom CSS overrides injected directly */}
         <style dangerouslySetInnerHTML={{ __html: customCSS }} />
 
         <div
           id="ink-preview-container"
-          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm w-full transition-all duration-300`}
+          className={`markdown-body theme-${currentTheme} min-h-full mx-auto shadow-sm border border-border rounded-sm transition-all duration-300`}
           style={{
             padding: getMarginPadding(),
-            maxWidth: getPageWidth(),
+            width: getPageWidth(),
+            minWidth: getPageWidth(),
           }}
           dangerouslySetInnerHTML={{ __html: renderedHtml }}
         />
