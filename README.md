@@ -1,54 +1,74 @@
-# ink-press ✍️
+# ink-press ✍️ — The Ultimate Online Markdown to PDF Converter
 
-`ink-press` is a production-grade, open-source Markdown editor and PDF generator featuring real-time live preview, dynamic page sheets emulation, custom CSS styling, and pixel-perfect vector PDF exports. 
+[![Live App](https://img.shields.io/badge/Live%20App-ink--press-blueviolet?style=for-the-badge&logo=vercel)](https://ink-press-navy.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-It is designed for technical writers, researchers, students, and developers who need to compile clean, beautiful notes, reports, slides, or academic papers directly to printable documents.
+**[ink-press](https://ink-press-navy.vercel.app/)** is a production-grade, SEO-optimized, open-source online Markdown editor and high-fidelity PDF generator. It is designed to compile clean, beautiful, print-ready documents (notes, reports, slides, or academic papers) directly from your web browser with absolute pixel-perfect layout preservation.
 
----
+Say goodbye to formatting headaches and layout shifting. With **ink-press**, what you see in the live preview is exactly what you get in your exported vector PDF.
 
-## 🚀 Key Features
-
-*   **Interactive Live Preview**: Split-pane layout with instant rendering synchronization as you type.
-*   **Dynamic Page Sheets Emulation**: Calculates content heights in real-time based on selected page sizes (A4, Letter, Legal, etc.) and overlays visual page gaps showing exactly where page-breaks will occur.
-*   **High-Fidelity PDF Export**: Powered by server-side Playwright & Headless Chromium contexts configured at exact `96 DPI` resolution to eliminate layout offset distortions.
-*   **Math Equations & Diagrams**: Full native support for LaTeX/KaTeX math formula blocks and Mermaid charts/diagrams.
-*   **Extensive Themes Collection**: 10+ built-in stylesheets including:
-    *   *GitHub Notes* (Standard clean markdown)
-    *   *Ruled Notebook* (Cream paper with horizontal lines and red legal margins spanning margins continuously)
-    *   *Academic LaTeX Paper* (Standard double-column paper structure)
-    *   *Matrix Hacker Monospace* (Green-on-black terminal design)
-    *   *Presentation Slide Deck* (Formatted slides)
-*   **Real-time Custom CSS override**: Dialog compiler to inject customized CSS variable declarations or overrides.
-*   **Client-Side Auto-Save**: Automatic state persistence to `localStorage` for open document markdown texts, filenames, and settings configurations.
-*   **Accessibility Shortcuts**: Keyboard bindings (`Ctrl/Cmd+S` to download markdown, `Ctrl/Cmd+P` to export PDF) and ARIA support.
+👉 **Start converting now at [ink-press-navy.vercel.app](https://ink-press-navy.vercel.app/)**
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 Why Choose ink-press? (The Ultimate Markdown to PDF Solution)
 
-*   **Framework**: Next.js 15+ (App Router) & React 19+
-*   **Styling**: Tailwind CSS v4, shadcn/ui & Vanilla CSS themes
-*   **State Management**: Zustand
-*   **Editor Engine**: CodeMirror 6 (with syntax highlighting and line wrapping)
-*   **Markdown AST Pipeline**: Unified, Remark, Rehype, KaTeX, and Mermaid
-*   **PDF Exporter**: Playwright & Headless Chromium
+When converting Markdown to PDF using traditional browser engines, pages shift, fonts distort, and tables split in half. **ink-press** solves this with a robust server-side headless browser engine paired with real-time page sheets emulation, giving you desktop-quality typesetting online.
+
+### 1. 🖨️ Real-Time Page Sheets Emulation (True WYSIWYG)
+Other editors render a continuous vertical scroll, leaving you guessing where page breaks will occur. **ink-press** calculates content heights dynamically based on standard print page sizes (A4, Letter, Legal, A3, A5) and overlays visual page boundary gaps. You see exactly where page breaks happen as you type!
+
+### 2. ⚡ Custom Page Breaks via `<br>`
+Want to force content to start on a fresh page? Simply type a standard HTML `<br>` or `<br />` tag anywhere in your editor. Our AST preprocessor intercepts it and translates it into a physical page-break element in both the screen preview and the final PDF export.
+
+### 3. 📊 Seamless LaTeX Math & Mermaid Diagrams
+* **Mathematical Notation**: Full, native KaTeX support. Render inline equations like $E = mc^2$ or block-level formulations like $\int_{a}^{b} f(x) \, dx = F(b) - F(a)$ instantly.
+* **Mermaid Flowcharts**: Write native code blocks (` ```mermaid `) to draw flowcharts, state diagrams, and sequences. The exporter packages and injects styling to ensure diagrams render correctly in the final PDF.
+* **Proportional Scaling**: Mermaid diagrams are automatically bounded so they fit perfectly within page margins without causing overflow or breaking across pages.
+
+### 4. 📱 Responsive Mobile Layout & Toggle Support
+Create and preview documents on the go. The interface scales cleanly to smartphones and tablets:
+* Access the **Markdown Editor** or **Live PDF Preview** using a glassmorphic floating toggle button.
+* Small viewports automatically scale the preview page using CSS `zoom: 0.46` to fit standard screens without reflowing the text, maintaining 100% parity with the desktop layout.
+* Horizontal scrolling is disabled, keeping navigation focused and scroll movements strictly vertical.
+
+### 5. 🎨 12+ Premium Typesetting Themes
+Choose from professional layouts designed for various use cases, including:
+* **GitHub Notes**: The classic, clean developer styling.
+* **Ruled Notebook**: Simulates lined cream paper with continuous vertical red legal margin lines, perfect for handwritten-style notes.
+* **Academic LaTeX Paper**: Elegant, double-column academic structure with classic serif fonts.
+* **Retro Amber Terminal**: A glowing amber terminal monospace font configuration on an ultra-dark background.
+* **Dracula Premium Dark**: Vibrant purple and green highlight colors optimized for nighttime writing.
+* **Matrix Hacker Monospace**: Cyberpunk green-on-black terminal design.
+* **Presentation Slide Deck**: Formatted blocks styled for slide layouts.
+* **Custom CSS Editor**: Open the Custom CSS Compiler Dialog to write, preview, and apply your own styling overrides in real-time.
 
 ---
 
-## 📁 Project Structure
+## 🛠️ High-Performance Tech Stack
+
+* **Framework**: Next.js 15+ (App Router) & React 19+ (fully optimized for serverless deployments)
+* **Text Editor**: CodeMirror 6 (with syntax highlighting, line numbers, and line wrapping)
+* **Parser Pipeline**: Unified, Remark, Rehype, KaTeX, and Mermaid AST compilation
+* **PDF Engine**: Server-side Headless Chromium (Puppeteer-core) configured at exact `96 DPI` resolution to eliminate layout offset distortions
+* **State Management**: Zustand (lightweight client-side store)
+
+---
+
+## 📁 Repository Map
 
 ```text
 ink-press/
 ├── app/                  # Next.js page views and API Route Handlers
-│   ├── api/export/       # Playwright PDF rendering endpoint
-│   ├── globals.css       # Tailwind imports and base editor styles
+│   ├── api/export/       # Puppeteer server-side PDF generation endpoint
+│   ├── globals.css       # Tailwind base editor styles
 │   └── page.tsx          # Main workspace shell with resizing panels
 ├── components/           # React UI components
 │   ├── editor/           # Advanced CodeMirror editor panel & toolbar
 │   ├── preview/          # Live HTML preview & auto-pagination hook
-│   ├── settings/         # Sidebar settings panel
+│   ├── settings/         # Page size & margin configuration dialog
 │   └── themes/           # Custom CSS compiler dialog
-├── lib/                  # Shared Zustand state stores & utilities
+├── lib/                  # State stores & parser utility pipelines
 │   ├── markdown/         # AST unified parser pipeline & unit tests
 │   └── store/            # Editor, Settings, and UI stores
 └── styles/               # CSS themes stylesheets (GitHub, Notebook, Hacker, etc.)
@@ -56,48 +76,10 @@ ink-press/
 
 ---
 
-## 💻 Getting Started
-
-### Prerequisites
-
-*   Node.js 18.0 or higher
-*   NPM or Yarn package manager
-
-### Installation
-
-1. Clone the repository and navigate to the directory:
-   ```bash
-   git clone https://github.com/ImSurajx/ink-press.git
-   cd ink-press
-   ```
-
-2. Install the package dependencies:
-   ```bash
-   npm install
-   ```
-
-### Running Locally
-
-To start the local development server:
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) inside your web browser.
-
----
-
-## 🧪 Testing
-
-The project uses **Vitest** to run high-performance unit test suites verifying the unified Markdown AST compilation pipeline.
-
-To execute the unit tests:
-```bash
-npm run test
-```
-
----
-
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+*Made with ❤️ by [ImSurajx](https://github.com/ImSurajx). If you find this project useful, please consider giving it a ⭐ on GitHub!*
