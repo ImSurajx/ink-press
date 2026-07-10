@@ -165,7 +165,7 @@ export default function PreviewPanel() {
 
         <div
           id="ink-preview-container"
-          className={`markdown-body theme-${currentTheme} mx-auto shadow-sm border border-border rounded-sm transition-all duration-300`}
+          className={`markdown-body theme-${currentTheme} mx-auto shadow-sm border border-border rounded-sm transition-all duration-300 flex-shrink-0`}
           style={{
             padding: getMarginPadding(),
             width: getPageWidth(),
