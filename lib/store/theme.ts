@@ -6,6 +6,8 @@ export type ThemeType =
   | "academic"
   | "modern"
   | "dark"
+  | "dracula"
+  | "retro-amber"
   | "code-notes"
   | "mathematics"
   | "physics"

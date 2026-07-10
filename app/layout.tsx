@@ -19,6 +19,8 @@ import "../styles/notebook.css";
 import "../styles/elegant-book.css";
 import "../styles/hacker.css";
 import "../styles/presentation.css";
+import "../styles/dracula.css";
+import "../styles/retro-amber.css";
 import "../styles/print.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";

@@ -162,6 +162,8 @@ export default function Header() {
     { value: "hacker", label: "Matrix Hacker Monospace" },
     { value: "presentation", label: "Presentation Slide Deck" },
     { value: "dark", label: "Dark Mode" },
+    { value: "dracula", label: "Dracula Premium Dark" },
+    { value: "retro-amber", label: "Retro Amber Terminal" },
     { value: "custom", label: "Custom CSS Override" },
   ];
 

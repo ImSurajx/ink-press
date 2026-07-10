@@ -198,7 +198,35 @@ const getThemeTemplateCSS = (theme: string): string => {
   --theme-code-bg: #1e293b;
   --theme-code-color: #cbd5e1;
   --theme-code-block-bg: #0b0f19;
-  --theme-mermaid-bg: #0f172a;`
+  --theme-mermaid-bg: #0f172a;`,
+    dracula: `  --theme-background: #282a36;
+  --theme-foreground: #f8f8f2;
+  --theme-heading: #ff79c6;
+  --theme-border: #44475a;
+  --theme-muted: #6272a4;
+  --theme-link: #8be9fd;
+  --theme-quote-border: #bd93f9;
+  --theme-quote-bg: #1e1f29;
+  --theme-table-header-bg: #44475a;
+  --theme-table-zebra-bg: #343746;
+  --theme-code-bg: #44475a;
+  --theme-code-color: #50fa7b;
+  --theme-code-block-bg: #1e1f29;
+  --theme-mermaid-bg: #282a36;`,
+    "retro-amber": `  --theme-background: #120a00;
+  --theme-foreground: #ffb000;
+  --theme-heading: #ffcc00;
+  --theme-border: #442e00;
+  --theme-muted: #996600;
+  --theme-link: #ffdf00;
+  --theme-quote-border: #ffb000;
+  --theme-quote-bg: #201400;
+  --theme-table-header-bg: #301e00;
+  --theme-table-zebra-bg: #1a0f00;
+  --theme-code-bg: #301e00;
+  --theme-code-color: #ffcc00;
+  --theme-code-block-bg: #0a0500;
+  --theme-mermaid-bg: #120a00;`
   };
 
   const variables = variablesMap[theme] || variablesMap.github;

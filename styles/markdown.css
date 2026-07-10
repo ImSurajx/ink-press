@@ -167,14 +167,25 @@
   border: 1px solid var(--theme-border);
 }
 
-.markdown-body pre code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
-  white-space: pre;
-  background-color: transparent;
-  border-radius: 0;
-  color: inherit;
+.markdown-body pre code,
+.markdown-body pre code.hljs {
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 100% !important;
+  white-space: pre !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+}
+
+/* Syntax highlighting overrides for variables/attributes/strings to be readable in dark code blocks */
+.markdown-body pre .hljs-variable,
+.markdown-body pre .hljs-template-variable,
+.markdown-body pre .hljs-attribute,
+.markdown-body pre .hljs-attr,
+.markdown-body pre .hljs-string {
+  color: #dc143c !important; /* Crimson */
 }
 
 /* Image styling */
