@@ -167,14 +167,16 @@
   border: 1px solid var(--theme-border);
 }
 
-.markdown-body pre code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
-  white-space: pre;
-  background-color: transparent;
-  border-radius: 0;
-  color: inherit;
+.markdown-body pre code,
+.markdown-body pre code.hljs {
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 100% !important;
+  white-space: pre !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  color: inherit !important;
 }
 
 /* Image styling */
