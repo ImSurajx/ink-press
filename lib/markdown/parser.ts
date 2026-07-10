@@ -38,7 +38,32 @@ function rehypeMermaid() {
   }
 }
 
+function preprocessMarkdown(markdown: string): string {
+  if (!markdown) return "";
+  // Split the markdown by fenced code blocks (``` ... ```)
+  const parts = markdown.split(/(```[\s\S]*?```)/g);
+  
+  return parts.map((part) => {
+    // If it is a fenced code block, do not replace inside it
+    if (part.startsWith("```")) {
+      return part;
+    }
+    
+    // Split by inline code blocks (`...`)
+    const inlineParts = part.split(/(`[^`\n]*?`)/g);
+    return inlineParts.map((inlinePart) => {
+      // If it is inline code, do not replace inside it
+      if (inlinePart.startsWith("`")) {
+        return inlinePart;
+      }
+      // Replace <br> and <br /> (case-insensitive) with block-level page breaks
+      return inlinePart.replace(/<br\s*\/?>/gi, '\n\n<div class="page-break-before"></div>\n\n');
+    }).join("");
+  }).join("");
+}
+
 export async function parseMarkdown(markdown: string): Promise<string> {
+  const preprocessed = preprocessMarkdown(markdown);
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -50,7 +75,7 @@ export async function parseMarkdown(markdown: string): Promise<string> {
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: "wrap" })
     .use(rehypeStringify, { allowDangerousHtml: true })
-    .process(markdown);
+    .process(preprocessed);
 
   return String(file);
 }
