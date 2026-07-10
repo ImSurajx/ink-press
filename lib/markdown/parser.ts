@@ -38,6 +38,28 @@ function rehypeMermaid() {
   }
 }
 
+// Custom Rehype plugin to convert top-level <br> elements to page breaks
+function rehypePageBreak() {
+  return (tree: any) => {
+    if (tree.type === "root" && tree.children) {
+      tree.children = tree.children.map((node: any) => {
+        if (
+          (node.type === "element" && node.tagName === "br") ||
+          (node.type === "raw" && /^\s*<br\s*\/?>\s*$/i.test(node.value))
+        ) {
+          return {
+            type: "element",
+            tagName: "div",
+            properties: { className: ["page-break-before"] },
+            children: [],
+          };
+        }
+        return node;
+      });
+    }
+  };
+}
+
 export async function parseMarkdown(markdown: string): Promise<string> {
   const file = await unified()
     .use(remarkParse)
@@ -45,6 +67,7 @@ export async function parseMarkdown(markdown: string): Promise<string> {
     .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeMermaid) // Handle Mermaid blocks before syntax highlighter
+    .use(rehypePageBreak) // Convert top-level <br> tags to page breaks
     .use(rehypeKatex)
     .use(rehypeHighlight, { detect: true, ignoreMissing: true })
     .use(rehypeSlug)

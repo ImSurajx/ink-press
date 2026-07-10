@@ -89,7 +89,7 @@ export default function EditorPanel() {
     { icon: Sigma, action: () => insertMarkdown("$", "$"), title: "Math Equation" },
     {
       icon: Scissors,
-      action: () => insertMarkdown("\n<div class=\"page-break-before\"></div>\n"),
+      action: () => insertMarkdown("\n<br>\n"),
       title: "Forced Page Break",
     },
   ];

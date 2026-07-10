@@ -332,14 +332,17 @@
   }
 
   /* Style auto page break elements to trigger physical page breaks in PDF */
-  .markdown-body > .auto-page-break {
+  .markdown-body > .auto-page-break,
+  .markdown-body > .page-break-before {
     margin-top: 0 !important;
     page-break-before: always !important;
     break-before: page !important;
   }
 
   .markdown-body > .auto-page-break::before,
-  .markdown-body > .auto-page-break::after {
+  .markdown-body > .auto-page-break::after,
+  .markdown-body > .page-break-before::before,
+  .markdown-body > .page-break-before::after {
     display: none !important;
   }
 

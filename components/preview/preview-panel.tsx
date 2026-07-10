@@ -121,6 +121,12 @@ export default function PreviewPanel() {
       children.forEach((child: any) => {
         if (child.tagName === "STYLE" || child.style.display === "none") return;
 
+        if (child.classList.contains("page-break-before")) {
+          child.classList.add("auto-page-break");
+          currentHeight = 0;
+          return;
+        }
+
         const h = child.offsetHeight;
         const styles = window.getComputedStyle(child);
         const marginTop = parseFloat(styles.marginTop) || 0;

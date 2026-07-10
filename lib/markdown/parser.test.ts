@@ -29,4 +29,17 @@ describe("Markdown Parser Pipeline", () => {
     const result = await parseMarkdown(markdown);
     expect(result).toContain("<del>deleted</del>");
   });
+
+  it("should convert top-level <br> tags to page-break-before divs", async () => {
+    const markdown = "Hello\n\n<br>\n\nWorld";
+    const result = await parseMarkdown(markdown);
+    expect(result).toContain("<div class=\"page-break-before\"></div>");
+  });
+
+  it("should keep inline <br> tags as normal line breaks", async () => {
+    const markdown = "Hello <br> World";
+    const result = await parseMarkdown(markdown);
+    expect(result).toContain("<br>");
+    expect(result).not.toContain("page-break-before");
+  });
 });
