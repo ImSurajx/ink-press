@@ -416,8 +416,6 @@
   }
 
   /* Prevent elements from cutting in half across PDF page boundaries */
-  .markdown-body p,
-  .markdown-body li,
   .markdown-body blockquote,
   .markdown-body pre,
   .markdown-body table,
