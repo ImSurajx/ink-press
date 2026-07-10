@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useEditorStore } from "@/lib/store/editor";
 import { useThemeStore } from "@/lib/store/theme";
 import { parseMarkdown } from "@/lib/markdown/parser";
@@ -69,40 +69,68 @@ export default function PreviewPanel() {
     };
   }, [markdown]);
 
-  // Mermaid rendering pipeline
+  const renderingRef = useRef(false);
+  const pendingRef = useRef(false);
+
+  // Initialize Mermaid once on mount and theme change
+  useEffect(() => {
+    try {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: resolvedTheme === "dark" ? "dark" : "default",
+        securityLevel: "loose",
+        themeVariables: {
+          background: resolvedTheme === "dark" ? "#0f172a" : "#ffffff",
+          primaryColor: resolvedTheme === "dark" ? "#1e293b" : "#f1f5f9",
+        },
+      });
+    } catch (err) {
+      console.error("Mermaid initialization error:", err);
+    }
+  }, [resolvedTheme]);
+
+  // Synchronized rendering pipeline to prevent race conditions during fast typing
   useEffect(() => {
     if (!renderedHtml) return;
 
-    const renderMermaid = async () => {
-      try {
-        // Re-initialize mermaid with current theme parameters
-        mermaid.initialize({
-          startOnLoad: false,
-          theme: resolvedTheme === "dark" ? "dark" : "default",
-          securityLevel: "loose",
-          themeVariables: {
-            background: resolvedTheme === "dark" ? "#0f172a" : "#ffffff",
-            primaryColor: resolvedTheme === "dark" ? "#1e293b" : "#f1f5f9",
-          },
-        });
+    const runMermaidRender = async () => {
+      if (renderingRef.current) {
+        pendingRef.current = true;
+        return;
+      }
 
+      renderingRef.current = true;
+      pendingRef.current = false;
+
+      try {
         const elements = document.querySelectorAll(".mermaid");
         if (elements.length > 0) {
-          // Reset data-processed attributes so Mermaid re-compiles the elements
+          // Backup the raw code and reset the elements cleanly before compilation
           elements.forEach((el) => {
+            const rawCode = el.getAttribute("data-mermaid-src") || el.textContent || "";
+            if (!el.getAttribute("data-mermaid-src")) {
+              el.setAttribute("data-mermaid-src", rawCode);
+            }
+            el.textContent = rawCode;
             el.removeAttribute("data-processed");
           });
+
           await mermaid.run({
             querySelector: ".mermaid",
           });
         }
       } catch (err) {
-        console.error("Mermaid rendering error:", err);
+        console.error("Mermaid run error:", err);
+      } finally {
+        renderingRef.current = false;
+        if (pendingRef.current) {
+          setTimeout(runMermaidRender, 0);
+        }
       }
     };
 
-    renderMermaid();
-  }, [renderedHtml, resolvedTheme]);
+    runMermaidRender();
+  }, [renderedHtml]);
 
   // Dynamic automatic page break annotation based on page size and content heights
   useEffect(() => {

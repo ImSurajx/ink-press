@@ -230,7 +230,11 @@
 }
 
 .markdown-body .mermaid svg {
-  max-width: 100% !important;
+  max-width: 100%;
+  max-height: 800px !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 /* Custom Admonitions / Callout Containers */
