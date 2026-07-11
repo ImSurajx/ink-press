@@ -169,8 +169,10 @@ export default function PreviewPanel() {
         const totalHeight = h + marginTop + marginBottom;
 
         if (currentHeight + totalHeight > targetPageHeight) {
-          child.classList.add("auto-page-break");
-          currentHeight = totalHeight;
+          if (currentHeight > 0) {
+            child.classList.add("auto-page-break");
+          }
+          currentHeight = totalHeight % targetPageHeight;
         } else {
           currentHeight += totalHeight;
         }
