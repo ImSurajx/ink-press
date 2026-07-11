@@ -151,6 +151,11 @@ export default function PreviewPanel() {
       // Temporarily strip auto-page-break to measure natural margins & heights accurately
       children.forEach((child: any) => {
         child.classList.remove("auto-page-break");
+        if (child.tagName === "UL" || child.tagName === "OL") {
+          Array.from(child.children).forEach((li: any) => {
+            li.classList.remove("auto-page-break");
+          });
+        }
       });
 
       children.forEach((child: any) => {
@@ -159,6 +164,35 @@ export default function PreviewPanel() {
         if (child.classList.contains("page-break-before")) {
           child.classList.add("auto-page-break");
           currentHeight = 0;
+          return;
+        }
+
+        if (child.tagName === "UL" || child.tagName === "OL") {
+          const lis = Array.from(child.children);
+          const listStyles = window.getComputedStyle(child);
+          const listMarginTop = parseFloat(listStyles.marginTop) || 0;
+          const listMarginBottom = parseFloat(listStyles.marginBottom) || 0;
+
+          currentHeight += listMarginTop;
+
+          lis.forEach((li: any) => {
+            const h = li.offsetHeight;
+            const styles = window.getComputedStyle(li);
+            const marginTop = parseFloat(styles.marginTop) || 0;
+            const marginBottom = parseFloat(styles.marginBottom) || 0;
+            const totalHeight = h + marginTop + marginBottom;
+
+            if (currentHeight + totalHeight > targetPageHeight) {
+              if (currentHeight > 0) {
+                li.classList.add("auto-page-break");
+              }
+              currentHeight = totalHeight % targetPageHeight;
+            } else {
+              currentHeight += totalHeight;
+            }
+          });
+
+          currentHeight += listMarginBottom;
           return;
         }
 
@@ -197,7 +231,7 @@ export default function PreviewPanel() {
 
         <div
           id="ink-preview-container"
-          className={`markdown-body theme-${currentTheme} mx-auto shadow-sm border border-border rounded-sm transition-all duration-300 flex-shrink-0`}
+          className={`markdown-body theme-${currentTheme} mx-auto shadow-sm border border-border rounded-sm transition-all duration-300 flex-shrink-0 overflow-hidden`}
           style={{
             padding: getMarginPadding(),
             width: getPageWidth(),

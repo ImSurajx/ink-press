@@ -315,20 +315,23 @@
 }
 
 /* Auto page break gap styled as a physical page gap in screen preview */
-.markdown-body>.auto-page-break {
+.markdown-body>.auto-page-break,
+.markdown-body ul li.auto-page-break,
+.markdown-body ol li.auto-page-break {
   margin-top: 80px !important;
   /* Spacing gap */
   position: relative !important;
 }
 
 /* Page break indicator line and label in preview */
-.markdown-body>.auto-page-break::before {
+.markdown-body>.auto-page-break::before,
+.markdown-body ul li.auto-page-break::before,
+.markdown-body ol li.auto-page-break::before {
   content: "" !important;
   position: absolute !important;
   top: -40px !important;
-  left: -80px !important;
-  /* Stretch across left padding */
-  right: -40px !important;
+  left: -1000px !important;
+  right: -1000px !important;
   height: 2px !important;
   background-color: var(--theme-border) !important;
   border-bottom: 2px dashed var(--theme-border) !important;
@@ -336,7 +339,9 @@
   display: block !important;
 }
 
-.markdown-body>.auto-page-break::after {
+.markdown-body>.auto-page-break::after,
+.markdown-body ul li.auto-page-break::after,
+.markdown-body ol li.auto-page-break::after {
   content: "PAGE BREAK" !important;
   position: absolute !important;
   left: 50% !important;
@@ -402,7 +407,9 @@
 
   /* Style auto page break elements to trigger physical page breaks in PDF */
   .markdown-body>.auto-page-break,
-  .markdown-body>.page-break-before {
+  .markdown-body>.page-break-before,
+  .markdown-body ul li.auto-page-break,
+  .markdown-body ol li.auto-page-break {
     margin-top: 0 !important;
     page-break-before: always !important;
     break-before: page !important;
@@ -411,7 +418,11 @@
   .markdown-body>.auto-page-break::before,
   .markdown-body>.auto-page-break::after,
   .markdown-body>.page-break-before::before,
-  .markdown-body>.page-break-before::after {
+  .markdown-body>.page-break-before::after,
+  .markdown-body ul li.auto-page-break::before,
+  .markdown-body ul li.auto-page-break::after,
+  .markdown-body ol li.auto-page-break::before,
+  .markdown-body ol li.auto-page-break::after {
     display: none !important;
   }
 
