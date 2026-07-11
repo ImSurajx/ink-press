@@ -405,20 +405,20 @@
     margin-bottom: 14px !important;
   }
 
+  /* Reset auto-page-break elements in print so they flow naturally without page breaks or artificial gaps */
+  .markdown-body>.auto-page-break:not(.page-break-before),
+  .markdown-body ul li.auto-page-break:not(.page-break-before),
+  .markdown-body ol li.auto-page-break:not(.page-break-before) {
+    margin-top: 0 !important;
+    page-break-before: auto !important;
+    break-before: auto !important;
+  }
+
   /* Style manual page break elements to trigger physical page breaks in PDF */
   .markdown-body>.page-break-before {
     margin-top: 0 !important;
     page-break-before: always !important;
     break-before: page !important;
-  }
-
-  /* Reset auto-page-break elements in print so they flow naturally without page breaks or artificial gaps */
-  .markdown-body>.auto-page-break,
-  .markdown-body ul li.auto-page-break,
-  .markdown-body ol li.auto-page-break {
-    margin-top: 0 !important;
-    page-break-before: auto !important;
-    break-before: auto !important;
   }
 
   .markdown-body>.auto-page-break::before,
