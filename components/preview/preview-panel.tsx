@@ -148,6 +148,9 @@ export default function PreviewPanel() {
       const targetPageHeight = getPageHeightPx() - 76; // 76px buffer (1cm top + 1cm bottom margins)
       let currentHeight = 0;
 
+      const containerStyle = window.getComputedStyle(container);
+      const zoom = parseFloat(containerStyle.zoom) || 1;
+
       // Temporarily strip auto-page-break to measure natural margins & heights accurately
       children.forEach((child: any) => {
         child.classList.remove("auto-page-break");
@@ -176,7 +179,7 @@ export default function PreviewPanel() {
           currentHeight += listMarginTop;
 
           lis.forEach((li: any) => {
-            const h = li.offsetHeight;
+            const h = li.offsetHeight / zoom;
             const styles = window.getComputedStyle(li);
             const marginTop = parseFloat(styles.marginTop) || 0;
             const marginBottom = parseFloat(styles.marginBottom) || 0;
@@ -196,7 +199,7 @@ export default function PreviewPanel() {
           return;
         }
 
-        const h = child.offsetHeight;
+        const h = child.offsetHeight / zoom;
         const styles = window.getComputedStyle(child);
         const marginTop = parseFloat(styles.marginTop) || 0;
         const marginBottom = parseFloat(styles.marginBottom) || 0;
