@@ -21,11 +21,7 @@
     print-color-adjust: exact !important;
   }
 
-  /* Page break control */
-  h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid;
-    break-after: avoid;
-  }
+
   
   img, table, pre, blockquote, .mermaid, .katex-display {
     page-break-inside: avoid;
